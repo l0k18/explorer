@@ -22,7 +22,7 @@ func TPLHandler() *template.Template {
 			str = str + s
 		}
 	}
-	fmt.Println("sssssssss", str)
+	// fmt.Println("sssssssss", str)
 	t := template.Must(template.New("").Parse(str))
 	return t
 }
