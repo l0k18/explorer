@@ -5,7 +5,7 @@ import (
 	"io/ioutil"
 	"text/template"
 
-	"git.parallelcoin.io/gopress/base/utl"
+	"git.parallelcoin.io/marcetin/explorer/utl"
 )
 
 func TPLHandler() *template.Template {
