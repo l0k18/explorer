@@ -22,25 +22,27 @@ func RTS() *mux.Router {
 
 	////////////////
 
-	r.HandleFunc("/a/last", apiLast)
-	r.HandleFunc("/a/info", apiInfo)
-	r.HandleFunc("/a/mining", apiMiningInfo)
-	r.HandleFunc("/a/rawpool", apiRawPool)
-	r.HandleFunc("/search", doSearch)
+	// r.HandleFunc("/a/last", apiLast)
+	// r.HandleFunc("/a/info", apiInfo)
+	// r.HandleFunc("/a/mining", apiMiningInfo)
+	// r.HandleFunc("/a/rawpool", apiRawPool)
+	// r.HandleFunc("/search", doSearch)
 
-	r.HandleFunc("/e/last", exp.LastBlock).Methods("GET")
-	r.HandleFunc("/e/b", exp.Block).Methods("GET")
-	r.HandleFunc("/e/block/{blockheight}", exp.BlockHeight).Methods("GET")
-	r.HandleFunc("/e/b/{blockheight}", exp.BHeight).Methods("GET")
-	r.HandleFunc("/e/hash/{blockhash}", exp.Hash).Methods("GET")
+	//////////////
 
-	r.HandleFunc("/e/tx/{txid}", exp.Tx).Methods("GET")
-	r.HandleFunc("/e/rmp", exp.RawMemPool).Methods("GET")
-	r.HandleFunc("/e/gmi", exp.MiningInfo).Methods("GET")
-	r.HandleFunc("/e/info", exp.Info).Methods("GET")
-	r.HandleFunc("/e/peer", exp.Peers).Methods("GET")
-	r.HandleFunc("/e/addr/{addr}", exp.Address).Methods("GET")
+	r.HandleFunc("/a/last", exp.LastBlock).Methods("GET")
+	r.HandleFunc("/a/b", exp.Block).Methods("GET")
+	r.HandleFunc("/a/block/{blockheight}", exp.BlockHeight).Methods("GET")
+	r.HandleFunc("/a/b/{blockheight}", exp.BHeight).Methods("GET")
+	r.HandleFunc("/a/hash/{blockhash}", exp.Hash).Methods("GET")
 
-	r.HandleFunc("/a/{type}/{id}", apiData)
+	r.HandleFunc("/a/tx/{txid}", exp.Tx).Methods("GET")
+	r.HandleFunc("/a/rawpool", exp.RawMemPool).Methods("GET")
+	r.HandleFunc("/a/mining", exp.MiningInfo).Methods("GET")
+	r.HandleFunc("/a/info", exp.Info).Methods("GET")
+	r.HandleFunc("/a/peer", exp.Peers).Methods("GET")
+	r.HandleFunc("/a/addr/{addr}", exp.Address).Methods("GET")
+
+	// r.HandleFunc("/a/{type}/{id}", apiData)
 	return r
 }

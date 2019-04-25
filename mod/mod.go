@@ -24,6 +24,7 @@ type Addr struct {
 }
 
 type Index struct {
+	ID     string    `json:"t=id"`
 	Node   *exp.Node `json:"n"`
 	Blocks []Block   `json:"b"`
 	AMP    amp.AMP   `json:"amp"`

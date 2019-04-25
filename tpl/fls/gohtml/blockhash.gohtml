@@ -1,8 +1,3 @@
-{{define "head"}} <title>Block {{.ID}}</title> {{end}}
-
-{{define "body"}}
-
-
 <div class="container">
   <div class="columns">
     <div class="column">
@@ -10,7 +5,7 @@
 <amp-list width="600"
 				  height="600"
 				  layout="responsive"
-				  src="/a/block/{{.ID}}"
+				  src="/a/hash/{{.ID}}"
           items="d"
           single-item
 				  class="cgl">
@@ -115,7 +110,7 @@
 {{`{{#previousblockhash}}`}}
     <tr>
       <td ><strong>Previous block hash</strong></td>
-              <td>{{.AMP.PrevBlockHash}}</td>
+       <td>{{.AMP.PrevBlockHash}}</td>
     </tr>
 {{`{{/previousblockhash}}`}}
 {{`{{#size}}`}}
@@ -167,5 +162,3 @@
 
 
 </div>
-
-{{end}}

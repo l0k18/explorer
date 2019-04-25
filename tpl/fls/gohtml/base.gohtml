@@ -1,9 +1,8 @@
-{{define "base"}}
 <!doctype html>
 <html ⚡>
 <head>
   <meta charset="utf-8">
-    {{template "head" .}}
+    {{template "head_gohtml" .}}
   <script async src="https://cdn.ampproject.org/v0.js"></script>
 
   
@@ -30,9 +29,9 @@
     <link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Ubuntu">
  
   <style amp-custom>
-       {{template "spectre.gohtml" .}}
+       {{template "spectre_gohtml" .}}
 
-       {{template "style.gohtml" .}}
+       {{template "style_gohtml" .}}
 
     </style>
 </head>
@@ -68,18 +67,17 @@
 
   {{ if .Node }}
   <div class="column col-9">
-{{template "body" .}}
+{{template "content_gohtml" .}}
  </div>
   <div class="column col-3">
-{{template "sidebar" .}}
+{{template "sidebar_gohtml" .}}
 </div>
 </div>
 {{else}}
 <div class="column col-3">
-{{template "addnode" .}}
+{{template "addnode_gohtml" .}}
 </div>
 {{end}}
 
 </body>
 </html>
-{{end}}

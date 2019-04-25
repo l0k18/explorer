@@ -11,16 +11,11 @@ import (
 )
 
 func NodeAdd(w http.ResponseWriter, r *http.Request) {
-
-	// r.ParseForm()
-
 	nodeid := r.FormValue("nodeid")
 	rpcuser := r.FormValue("rpcuser")
-
 	rpcpassword := r.FormValue("rpcpassword")
 	ip := r.FormValue("ip")
 	port, _ := strconv.ParseInt(r.FormValue("port"), 10, 64)
-
 	slug := utl.MakeSlug(nodeid)
 	var node = exp.Node{
 		NodeID:      nodeid,
@@ -32,10 +27,7 @@ func NodeAdd(w http.ResponseWriter, r *http.Request) {
 	}
 	jdb.JDB.Write("nodes", slug, node)
 	fmt.Println("asssssss", node)
-	SendJsonResponse(w, exp.Node{})
-	http.Redirect(w, r, "/", 302)
-}
-
-func isUserTryingTheInputTextErrorDemo(name string) bool {
-	return name == "error"
+	w.Header().Set("AMP-Redirect-To", "http://localhost:4000/")
+	w.Header().Set("Access-Control-Expose-Headers", "AMP-Access-Control-Allow-Source-Origin, AMP-Redirect-To")
+	SendJsonResponse(w, node)
 }
