@@ -2,6 +2,7 @@ package exp
 
 import (
 	"fmt"
+	"strconv"
 
 	"git.parallelcoin.io/marcetin/explorer/utl"
 )
@@ -21,7 +22,7 @@ import (
 // 	JNGetInfo() interface{}
 // }
 
-func (node *Node) JNGetBlockCount() int {
+func (node *Node) JNGetBlockCount() (b int) {
 	jrc := utl.NewClient(node.RPCUser, node.RPCPassword, node.IP, node.Port)
 	if jrc == nil {
 		fmt.Println("Error node status write")
@@ -32,9 +33,17 @@ func (node *Node) JNGetBlockCount() int {
 		fmt.Println("Error node call: ", err)
 
 	}
-	getFBlC := gbc.(float64)
-	var getBlCount int = int(getFBlC)
-	return getBlCount
+	switch gbc.(type) {
+	case float64:
+		return int(gbc.(float64))
+	case string:
+		b, _ := strconv.Atoi(gbc.(string))
+		return b
+	default:
+		b, _ := strconv.Atoi(gbc.(string))
+		return b
+	}
+	return
 }
 
 func (node *Node) JNGetBlock(blockhash string) interface{} {
