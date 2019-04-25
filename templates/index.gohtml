@@ -1,0 +1,81 @@
+{{define "head"}} <title>ParallelCoin Blockchain Explorer</title> {{end}}
+
+{{define "body"}}
+<div class="panel bg-gray">
+  <div class="panel-header">
+    <div class="panel-title">Last ParallelCoin Blocks</div>
+  </div>
+  <div class="panel-nav">
+    <!-- navigation components: tabs, breadcrumbs or pagination -->
+  </div>
+  <div class="panel-body">
+    <!-- contents -->
+  
+<div class="container">
+
+
+<amp-list
+				  height="600"
+				  layout="fixed-height"
+				  src="/a/last"
+		          items="d"
+				  class="cgl">
+<template type="amp-mustache">
+<div class="card">
+  <div class="card-body">
+	<div class="column columns">
+    <div class="column col-2">
+      <div class="card-title">
+        <amp-fit-text width="180"
+      height="64"
+      layout="responsive"
+      min-font-size="24">{{.AMP.BlockHeight}}</amp-fit-text>
+      </div>
+    </div>
+
+    <div class="divider-vert"></div>
+    <div class="column col-4">
+       <div class="card-subtitle text-gray"><amp-date-display timestamp-seconds="{{`{{time}}`}}" layout="responsive"><template type="amp-mustache">{{`{{dayName}}`}} {{`{{day}}`}} {{`{{monthName}}`}} {{`{{year}}`}}</template></amp-date-display></div>
+    </div>
+    <div class="column col-5">
+    <span class="chip">Difficulty:</span>{{`{{difficulty}}`}}
+    </div>
+		<div class="column col-1">
+      <span class="chip">Hash</span>
+    </div>
+    <div class="column col-11">
+      <div class="clearfix"></div>
+      <amp-fit-text width="500"
+      height="12"
+      layout="responsive"
+      min-font-size="8">{{.AMP.BlockHash}}</amp-fit-text>
+    </div>
+    
+    <div class="column col-2">      
+      <div class="docs-shape h2 bg-success pt-5 pb-3 text-center float-right">{{`{{confirmations}}`}}<sub class="h6">confirmations</sub>
+      </div>
+</div>
+  
+    <div class="divider-vert"></div>
+    <div class="column col-9 col-ml-auto">
+     <ul class="menu nobs">
+        <li class="divider color-dark" data-content="Transactions"></li>
+      <!-- menu item standard -->
+        {{`{{#tx}}`}}<li class="menu-item tx"><amp-fit-text width="300"
+      height="14"
+      layout="responsive"
+      min-font-size="8">{{.AMP.Tx}}</amp-fit-text></li>{{`{{/tx}}`}}
+     </ul>
+   </div>
+</div>
+
+ </div>
+</div>
+
+  </template>
+		</amp-list>
+</div>
+
+</div>
+</div>
+{{end}}

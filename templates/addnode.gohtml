@@ -1,0 +1,14 @@
+{{define "addnode"}}
+<form method="post"
+      action-xhr="/addnode"
+      target="_top">
+    <fieldset>
+        <label><span>NodeID</span><input type="text" name="nodeid" id="nodeid" required></label><br>
+        <label><span>RPCUser</span><input type="text" name="rpcuser" id="rpcuser" required></label><br>
+        <label><span>RPCPassword</span><input type="text" name="rpcpassword" id="rpcpassword" required></label><br>
+        <label><span>IP</span><input type="text" name="ip" id="ip" required></label><br>
+        <label><span>Port</span><input type="number" name="port" id="port" required></label><br>
+        <label><span>Save</span><input type="submit" value="Save"></label><br>
+    </fieldset>
+</form>
+{{end}}
