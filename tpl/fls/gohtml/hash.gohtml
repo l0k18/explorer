@@ -78,7 +78,7 @@
 {{`{{#nextblockhash}}`}}
     <tr>
       <td ><strong>Next block hash</strong></td>
-       <td>{{.AMP.NextBlockHash}}</td>
+       <td>{{ template "nextblockhash_html" .}}</td>
     </tr>
 {{`{{/nextblockhash}}`}}
 {{`{{#nonce}}`}}
@@ -110,7 +110,7 @@
 {{`{{#previousblockhash}}`}}
     <tr>
       <td ><strong>Previous block hash</strong></td>
-       <td>{{.AMP.PrevBlockHash}}</td>
+       <td>{{ template "previousblockhash_html" .}}</td>
     </tr>
 {{`{{/previousblockhash}}`}}
 {{`{{#size}}`}}
@@ -136,7 +136,7 @@
     <tr>
       <td ><strong>TXs</strong></td>
        
-       <td>{{`{{#tx}}`}}{{.AMP.Tx}}<br>{{`{{/tx}}`}}</td>
+       <td>{{`{{#tx}}`}}{{template "tx_html" .}}<br>{{`{{/tx}}`}}</td>
     </tr>
 {{`{{/tx}}`}}
 

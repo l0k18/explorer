@@ -10,19 +10,19 @@ import (
 // var _ JormNode = &Node{}
 
 // type JormNode interface {
-// 	JNGetBlockCount() int
-// 	// JNGetBlockByHash(blockhash string) interface{}
-// 	JNGetBlock(blockhash string) interface{}
-// 	JNGetBlockTxAddr(blockheight int) interface{}
-// 	JNGetBlockByHeight(blockheight int) interface{}
-// 	JNGetTx(txid string) interface{}
-// 	JNGetAddr(cs *CSystem, addr string) interface{}
-// 	JNGetRawMemPool() interface{}
-// 	JNGetMiningInfo() interface{}
-// 	JNGetInfo() interface{}
+// 	GetBlockCount() int
+// 	// GetBlockByHash(blockhash string) interface{}
+// 	GetBlock(blockhash string) interface{}
+// 	GetBlockTxAddr(blockheight int) interface{}
+// 	GetBlockByHeight(blockheight int) interface{}
+// 	GetTx(txid string) interface{}
+// 	GetAddr(cs *CSystem, addr string) interface{}
+// 	GetRawMemPool() interface{}
+// 	GetMiningInfo() interface{}
+// 	GetInfo() interface{}
 // }
 
-func (node *Node) JNGetBlockCount() (b int) {
+func (node *Node) GetBlockCount() (b int) {
 	jrc := utl.NewClient(node.RPCUser, node.RPCPassword, node.IP, node.Port)
 	if jrc == nil {
 		fmt.Println("Error node status write")
@@ -46,7 +46,20 @@ func (node *Node) JNGetBlockCount() (b int) {
 	return
 }
 
-func (node *Node) JNGetBlock(blockhash string) interface{} {
+func (node *Node) GetLastBlocks() *map[int]map[string]interface{} {
+	lb := make(map[int]map[string]interface{})
+	blockcount := SrcNode().GetBlockCount()
+	minusblockcount := int(blockcount - 100)
+	for ibh := minusblockcount; ibh <= blockcount; {
+		var blk map[string]interface{}
+		blk = (SrcNode().GetBlockByHeight(ibh)).(map[string]interface{})
+		lb[ibh] = blk
+		ibh++
+	}
+	return &lb
+}
+
+func (node *Node) GetBlock(blockhash string) interface{} {
 	jrc := utl.NewClient(node.RPCUser, node.RPCPassword, node.IP, node.Port)
 	if jrc == nil {
 		fmt.Println("Error node status write")
@@ -59,7 +72,7 @@ func (node *Node) JNGetBlock(blockhash string) interface{} {
 	return block
 }
 
-func (node *Node) JNGetBlockTxAddr(blockheight int) interface{} {
+func (node *Node) GetBlockTxAddr(blockheight int) interface{} {
 	jrc := utl.NewClient(node.RPCUser, node.RPCPassword, node.IP, node.Port)
 	if jrc == nil {
 		fmt.Println("Error node status write")
@@ -74,7 +87,7 @@ func (node *Node) JNGetBlockTxAddr(blockheight int) interface{} {
 	var block interface{}
 	var txs []interface{}
 	if blockHash != nil {
-		block = node.JNGetBlock((blockHash).(string))
+		block = node.GetBlock((blockHash).(string))
 	}
 	iblock := make(map[string]interface{})
 	iblock = block.(map[string]interface{})
@@ -106,7 +119,7 @@ func (node *Node) JNGetBlockTxAddr(blockheight int) interface{} {
 	}
 	return blocktxaddr
 }
-func (node *Node) JNGetBlockByHeight(blockheight int) interface{} {
+func (node *Node) GetBlockByHeight(blockheight int) interface{} {
 	jrc := utl.NewClient(node.RPCUser, node.RPCPassword, node.IP, node.Port)
 	if jrc == nil {
 		fmt.Println("Error node status write")
@@ -120,11 +133,11 @@ func (node *Node) JNGetBlockByHeight(blockheight int) interface{} {
 	}
 	var block interface{}
 	if blockHash != nil {
-		block = node.JNGetBlock((blockHash).(string))
+		block = node.GetBlock((blockHash).(string))
 	}
 	return block
 }
-func (node *Node) JNGetTx(txid string) interface{} {
+func (node *Node) GetTx(txid string) interface{} {
 	jrc := utl.NewClient(node.RPCUser, node.RPCPassword, node.IP, node.Port)
 	if jrc == nil {
 		fmt.Println("Error node status write")
@@ -143,7 +156,7 @@ func (node *Node) JNGetTx(txid string) interface{} {
 	return rtx
 }
 
-// func (node *Node) JNGetAddr(addr string) interface{} {
+// func (node *Node) GetAddr(addr string) interface{} {
 
 // aD := exJDB.EJDBGetAddr(addr)
 // if aD.Addr == "" {
@@ -151,7 +164,7 @@ func (node *Node) JNGetTx(txid string) interface{} {
 // }
 // 	 return aD
 // }
-func (node *Node) JNGetRawMemPool() interface{} {
+func (node *Node) GetRawMemPool() interface{} {
 	jrc := utl.NewClient(node.RPCUser, node.RPCPassword, node.IP, node.Port)
 	if jrc == nil {
 		fmt.Println("Error node status write")
@@ -164,7 +177,7 @@ func (node *Node) JNGetRawMemPool() interface{} {
 	return get
 }
 
-func (node *Node) JNGetMiningInfo() interface{} {
+func (node *Node) GetMiningInfo() interface{} {
 	jrc := utl.NewClient(node.RPCUser, node.RPCPassword, node.IP, node.Port)
 	if jrc == nil {
 		fmt.Println("Error node status write")
@@ -177,7 +190,7 @@ func (node *Node) JNGetMiningInfo() interface{} {
 	return get
 }
 
-func (node *Node) JNGetInfo() interface{} {
+func (node *Node) GetInfo() interface{} {
 	jrc := utl.NewClient(node.RPCUser, node.RPCPassword, node.IP, node.Port)
 	if jrc == nil {
 		fmt.Println("Error node status write")
@@ -189,7 +202,7 @@ func (node *Node) JNGetInfo() interface{} {
 	}
 	return get
 }
-func (node *Node) JNGetPeerInfo() interface{} {
+func (node *Node) GetPeerInfo() interface{} {
 	jrc := utl.NewClient(node.RPCUser, node.RPCPassword, node.IP, node.Port)
 	if jrc == nil {
 		fmt.Println("Error node status write")

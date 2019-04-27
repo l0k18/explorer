@@ -1,9 +1,6 @@
-<div class="panel bg-gray">
-  <div class="panel-header">
-    <div class="panel-title">Info</div>
-  </div>
-  <div class="panel-body">
-    <div class="container">
+<aside>
+      
+<div amp-fx="fly-in-right" data-duration="500ms">Info
       <amp-list
 				  height="300"
 				  layout="fixed-height"
@@ -12,22 +9,18 @@
               single-item
 				  class="cgl">
         <template type="amp-mustache">
-          <button class="btn btn-error">Blocks: {{`{{blocks}}`}}</button>
-          <button class="btn btn-error">Difficulty: {{`{{difficulty}}`}}</button>
-          <button class="btn btn-error">Current Block Size: {{`{{currentblocksize}}`}}</button>
-          <button class="btn btn-error">Current Block Tx: {{`{{currentblocktx}}`}}</button>
-          <button class="btn btn-error">Difficulty Scrypt: {{`{{difficulty_scrypt}}`}}</button>
-          <button class="btn btn-error">Difficulty SHA256d: {{`{{difficulty_sha256d}}`}}</button>
+          Blocks: {{`{{blocks}}`}}<br>
+          Difficulty: {{`{{difficulty}}`}}<br>
+          Current Block Size: {{`{{currentblocksize}}`}}<br>
+          Current Block Tx: {{template "currentblocktx_html" .}}<br>
+          Difficulty Scrypt: {{`{{difficulty_scrypt}}`}}<br>
+          Difficulty SHA256d: {{`{{difficulty_sha256d}}`}}<br>
         </template>
       </amp-list>
-    </div>
-  </div>
-</div>
-
-<div class="panel bg-gray">
-  <div class="panel-header"><div class="panel-title">Latest Transactions</div></div>
-  <div class="panel-body">
-    <div class="container">
+  
+  
+  Latest Transactions
+  
       <amp-list
 				  height="200"
 				  layout="fixed-height"
@@ -35,9 +28,10 @@
 		          items="d"
 				  class="cgl">
         <template type="amp-mustache">
-          <li class="menu-item">{{.AMP.Tx}}</li>
+        {{template "tx_html" .}}
+          <br>
         </template>
       </amp-list>
-    </div>
-  </div>
 </div>
+
+  </aside>

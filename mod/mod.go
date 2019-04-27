@@ -24,10 +24,12 @@ type Addr struct {
 }
 
 type Index struct {
-	ID     string    `json:"t=id"`
-	Node   *exp.Node `json:"n"`
-	Blocks []Block   `json:"b"`
-	AMP    amp.AMP   `json:"amp"`
+	ID         string                         `json:"id"`
+	LastBlocks map[int]map[string]interface{} `json:"lb"`
+	Node       *exp.Node                      `json:"n"`
+	Blocks     []Block                        `json:"b"`
+	AMP        amp.AMP                        `json:"amp"`
+	Rich       map[string]float64             `json:"rich"`
 }
 
 type BlVw struct {

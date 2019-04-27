@@ -1,0 +1,5 @@
+<section  layout="container"  [hidden]="!(tp == 'home')">{{template "home_gohtml" .}}</section>
+<section  layout="container"  hidden [hidden]="!(tp == 'block')">{{template "block_gohtml" .}}</section>
+<section  layout="container"  hidden [hidden]="!(tp == 'tx')">{{template "tx_gohtml" .}}</section>
+<section  layout="container"  hidden [hidden]="!(tp == 'addr')">{{template "addr_gohtml" .}}</section>
+<section  layout="container"  hidden [hidden]="!(tp == 'rich')">{{template "rich_gohtml" .}}</section>

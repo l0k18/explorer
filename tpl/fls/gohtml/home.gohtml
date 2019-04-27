@@ -1,0 +1,20 @@
+<amp-live-list id="last-blocks-list" data-poll-interval="16000" data-max-items-per-page="9">
+<div update on="tap:last-blocks.update">new blocks</div>
+<div items class="latestblocks">
+{{ range .LastBlocks}}
+<div id="block-{{.height}}" data-sort-time='{{printf "%.0f" .time}}' class="blst"  amp-fx="fly-in-bottom" data-duration="320ms">
+<button on="tap:AMP.setState({id: '{{.height}}', tp: 'block'})" class="block">{{.height}}</button>
+
+<small>{{printf "%.8f" .difficulty }}</small>
+<small>{{ .confirmations }}</small>
+<time><amp-date-display timestamp-seconds='{{printf "%.0f" .time}}' layout="flex-item">
+<template type="amp-mustache">{{`{{day}}`}} {{`{{monthName}}`}} {{`{{year}}`}} {{`{{hourTwoDigit}}`}}:{{`{{minuteTwoDigit}}`}}
+</template></amp-date-display></time>
+<button on="tap:block-{{.height}}-txs.toggleVisibility">TXS</button>
+</div>
+<div id="block-{{.height}}-txs" hidden class="blocktxs" >
+{{range .tx}}<button on="tap:AMP.setState({id: '{{printf "%s" . }}', tp: 'tx'})" class="tx">{{.}}</button>{{end}}
+</div>
+{{end}}
+</div>
+</amp-live-list>

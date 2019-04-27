@@ -17,5 +17,6 @@ func main() {
 	fmt.Println("-.-.-.-.-.-.    Listen on port :4000    -.-.-.-.-.")
 	fmt.Println("-.-.-.-.-.-.                            -.-.-.-.-.")
 	fmt.Println("-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.")
+	// exp.SrcNode().GetAddrs()
 	log.Fatal(http.ListenAndServe(":4000", handlers.CORS()(r)))
 }

@@ -8,10 +8,10 @@ import (
 func RTS() *mux.Router {
 	r := mux.NewRouter().StrictSlash(false)
 	r.HandleFunc("/", HomeHandler)
-	r.HandleFunc("/block/{id}", viewBlock)
-	r.HandleFunc("/blockhash/{blockhash}", viewBlockHash)
-	r.HandleFunc("/tx/{id}", viewTx)
-	r.HandleFunc("/addr/{id}", viewAddr)
+	// r.HandleFunc("/block/{id}", viewBlock)
+	// r.HandleFunc("/blockhash/{blockhash}", viewBlockHash)
+	// r.HandleFunc("/tx/{id}", viewTx)
+	// r.HandleFunc("/addr/{id}", viewAddr)
 
 	// crs := cors.New(cors.Options{
 	// 	AllowedOrigins:   []string{"*"}, // allows everything, use that to change the hosts.

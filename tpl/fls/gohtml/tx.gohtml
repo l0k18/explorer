@@ -1,0 +1,39 @@
+<amp-list width="600" height="600" layout="responsive" [src]="'/a/tx/'+ id" items="d" single-item class="cgl">
+<template type="amp-mustache">
+Transaction
+<amp-fit-text width="320" height="8" layout="responsive" min-font-size="8" [text]="id"></amp-fit-text>
+<table class="table table-hover">
+<tbody>
+{{`{{#blockhash}}`}}<tr><td>Block hash</td><td>{{template "blockhash_html" .}}</td></tr>{{`{{/blockhash}}`}}
+{{`{{#blocktime}}`}}<tr><td>Block time</td><td>{{`{{blocktime}}`}}</td></tr>{{`{{/blocktime}}`}}
+{{`{{#confirmations}}`}}<tr><td >Confirmations</td><td [text]="{{`{{confirmations}}`}}"></td></tr>{{`{{/confirmations}}`}}
+<!--{{`{{#hex}}`}}<tr><td >Hex</td>
+<td><small>{{`{{hex}}`}}</small></td></tr>{{`{{/hex}}`}}-->
+{{`{{#locktime}}`}}<tr><td >Locktime</td><td>{{`{{locktime}}`}}</td></tr>{{`{{/locktime}}`}}
+{{`{{#time}}`}}<tr><td >Time</td><td>{{`{{time}}`}}</td></tr>{{`{{/time}}`}}
+{{`{{#txid}}`}}<tr><td >TXid</td><td>{{`{{txid}}`}}</td></tr>{{`{{/txid}}`}}
+{{`{{#version}}`}}<tr><td >Version</td><td [text]="{{`{{version}}`}}"></td></tr>{{`{{/version}}`}}
+
+
+{{`{{#vin}}`}}<tr><td>Value in</td><td class="wbr">{{`{{#vin}}`}}
+      {{`{{#coinbase}}`}}Coinbase: {{`{{coinbase}}`}}{{`{{/coinbase}}`}}
+      {{`{{#sequence}}`}}Sequence: {{`{{sequence}}`}}{{`{{/sequence}}`}}
+{{`{{/vin}}`}}</td></tr>{{`{{/vin}}`}}
+
+
+{{`{{#vout}}`}}<tr><td >Value out</td>       
+       <td>{{`{{#vout}}`}}
+        {{`{{#n}}`}}N: {{`{{n}}`}} {{`{{/n}}`}}<br>
+          {{`{{#scriptPubKey}}`}}
+              {{`{{#addresses}}`}}Addresses: {{template "addr_html" .}}{{`{{/addresses}}`}}<br>
+              {{`{{#asm}}`}}ASM: <small class="wbk" [text]="{{`{{asm}}`}}"></small>{{`{{/asm}}`}}<br>
+              {{`{{#hex}}`}}hex: {{`{{hex}}`}} {{`{{/hex}}`}}<br>
+                {{`{{#reqSigs}}`}}ReqSigs: {{`{{reqSigs}}`}} {{`{{/reqSigs}}`}}<br>
+                {{`{{#type}}`}}Type: {{`{{type}}`}} {{`{{/type}}`}}<br>
+        {{`{{/scriptPubKey}}`}} 
+          <hr>
+    {{`{{#value}}`}}Value: {{`{{value}}`}} {{`{{/value}}`}}<br>
+
+      {{`{{/vout}}`}}</td></tr>{{`{{/vout}}`}}
+</tbody>
+</table></template></amp-list>

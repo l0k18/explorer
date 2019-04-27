@@ -21,20 +21,8 @@ import (
 // var aNode = aNode()
 
 func LastBlock(w http.ResponseWriter, r *http.Request) {
-	var lastblocks []interface{}
-	// node := Node{}
-	// fmt.Println("nodenodenodenode", aNode)
-
-	blockcount := SrcNode().JNGetBlockCount()
-	minusblockcount := int(blockcount - 20)
-	for ibh := minusblockcount; ibh <= blockcount; {
-		//ib := strconv.Itoa(ibh)
-		blk := SrcNode().JNGetBlockByHeight(ibh)
-		lastblocks = append(lastblocks, blk)
-		ibh++
-	}
 	lb := map[string]interface{}{
-		"d": lastblocks,
+		"d": SrcNode().GetLastBlocks(),
 	}
 	out, err := json.Marshal(lb)
 	if err != nil {
@@ -46,7 +34,7 @@ func LastBlock(w http.ResponseWriter, r *http.Request) {
 
 func Block(w http.ResponseWriter, r *http.Request) {
 	// node := Node{}
-	lastblock := SrcNode().JNGetBlockCount()
+	lastblock := SrcNode().GetBlockCount()
 
 	bl := map[string]interface{}{
 		"d": lastblock,
@@ -64,7 +52,7 @@ func BlockHeight(w http.ResponseWriter, r *http.Request) {
 	bh := vars["blockheight"]
 	// node := Node{}
 	bhi, _ := strconv.Atoi(bh)
-	block := SrcNode().JNGetBlockByHeight(bhi)
+	block := SrcNode().GetBlockByHeight(bhi)
 	bl := map[string]interface{}{
 		"d": block,
 	}
@@ -82,7 +70,7 @@ func BHeight(w http.ResponseWriter, r *http.Request) {
 	// node := Node{}
 
 	bhi, _ := strconv.Atoi(bh)
-	block := SrcNode().JNGetBlockTxAddr(bhi)
+	block := SrcNode().GetBlockTxAddr(bhi)
 	bl := map[string]interface{}{
 		"d": block,
 	}
@@ -99,16 +87,10 @@ func Hash(w http.ResponseWriter, r *http.Request) {
 	bh := vars["blockhash"]
 	// node := Node{}
 
-	block := SrcNode().JNGetBlock(bh)
-	bl := map[string]interface{}{
-		"d": block,
-	}
-	out, err := json.Marshal(bl)
-	if err != nil {
-		fmt.Println("Error encoding JSON")
-		return
-	}
-	w.Write([]byte(out))
+	block := SrcNode().GetBlock(bh)
+	b := block.(map[string]interface{})
+	h := b["height"].(string)
+	http.Redirect(w, r, "/a/block/"+h, 301)
 }
 
 func Tx(w http.ResponseWriter, r *http.Request) {
@@ -116,7 +98,7 @@ func Tx(w http.ResponseWriter, r *http.Request) {
 	txid := vars["txid"]
 	// node := Node{}
 
-	tX := SrcNode().JNGetTx(txid)
+	tX := SrcNode().GetTx(txid)
 
 	tx := map[string]interface{}{
 		"d": tX,
@@ -130,7 +112,7 @@ func Tx(w http.ResponseWriter, r *http.Request) {
 }
 func RawMemPool(w http.ResponseWriter, r *http.Request) {
 	// node := Node{}
-	rawMemPool := SrcNode().JNGetRawMemPool()
+	rawMemPool := SrcNode().GetRawMemPool()
 	rmp := map[string]interface{}{
 		"d": rawMemPool,
 	}
@@ -143,7 +125,7 @@ func RawMemPool(w http.ResponseWriter, r *http.Request) {
 }
 func MiningInfo(w http.ResponseWriter, r *http.Request) {
 	// node := Node{}
-	miningInfo := SrcNode().JNGetMiningInfo()
+	miningInfo := SrcNode().GetMiningInfo()
 
 	mi := map[string]interface{}{
 		"d": miningInfo,
@@ -157,7 +139,7 @@ func MiningInfo(w http.ResponseWriter, r *http.Request) {
 }
 func Info(w http.ResponseWriter, r *http.Request) {
 	// node := Node{}
-	info := SrcNode().JNGetInfo()
+	info := SrcNode().GetInfo()
 
 	in := map[string]interface{}{
 		"d": info,
@@ -171,7 +153,7 @@ func Info(w http.ResponseWriter, r *http.Request) {
 }
 func Peers(w http.ResponseWriter, r *http.Request) {
 	// node := Node{}
-	info := SrcNode().JNGetPeerInfo()
+	info := SrcNode().GetPeerInfo()
 	pi := map[string]interface{}{
 		"d": info,
 	}
@@ -188,7 +170,7 @@ func Address(w http.ResponseWriter, r *http.Request) {
 	// addr := vars["addr"]
 	// node := GetBitNodes(coin)
 
-	// aD := node.JNGetAddr(addr)
+	// aD := node.GetAddr(addr)
 
 	// fmt.Println("343434343444", aD)
 	// sty, err := json.Marshal(aD)
