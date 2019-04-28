@@ -1,0 +1,53 @@
+<div class="items">
+  <div class="item pd1">
+<span>Block Height</span>
+<span>Difficulty</span>
+<span>Confirmations</span>
+<span>Time</span>
+<span>Transactions List</span>
+  </div></div>
+<amp-list class="paged-amp-list" layout="responsive" width="700" height="600" id="blocks" src="'/a/' + coin + '/blocks/' + perPage + '/' + pageNumber" [src]="'/a/' + coin + '/blocks/' + perPage + '/' + pageNumber" binding="no" items="d" reset-on-refresh single-item>
+            <template type="amp-mustache">
+
+<div class="items">
+{{`{{#blocks}}`}}
+<div id="block-{{`{{height}}`}}" class="item" amp-fx="fly-in-bottom" data-duration="320ms">
+<button on="tap:AMP.setState({id: {{`{{height}}`}}, tp: 'block'})" class="block">{{`{{height}}`}}</button>
+<small>{{`{{difficulty }}`}}</small>
+<small>{{`{{confirmations }}`}}</small>
+<time><amp-date-display timestamp-seconds='{{`{{time}}`}}' layout="flex-item">
+<template type="amp-mustache">{{`{{day}}`}} {{`{{monthName}}`}} {{`{{year}}`}} {{`{{hourTwoDigit}}`}}:{{`{{minuteTwoDigit}}`}}
+</template></amp-date-display></time>
+<button on="tap:block-{{`{{height}}`}}-txs.toggleVisibility" class="txs"><small>TXs</small></button>
+</div>
+<div id="block-{{`{{height}}`}}-txs" hidden class="blocktxs" >
+{{`{{#tx}}`}}<button on="tap:AMP.setState({id: '{{`{{ . }}`}}', tp: 'tx'})" class="tx">{{`{{.}}`}}</button>{{`{{/tx}}`}}
+</div>
+{{`{{/blocks}}`}}
+</div>
+<p class="info">Page {{`{{currentPage}}`}} of {{`{{pageCount}}`}}</p>
+</template>
+<div overflow><button>Show more</button></div>
+</amp-list>
+  <div class="nav">
+    <button class="prev"
+            hidden
+            [hidden]="pageNumber < 2"
+            on="tap: AMP.setState({ pageNumber: pageNumber - 1 })">
+      Previous
+    </button>
+     <label>Blocks per page <input type="number" min="10" max="99" placeholder="10" [value]="perPage" on="input-throttled:AMP.setState({ perPage: event.value })" value="10"></label>
+    <button class="next"
+            [hidden]="page ? pageNumber >= page.d.pageCount : false"
+            on="tap: AMP.setState({ pageNumber: pageNumber ? pageNumber + 1 : 2 })">
+      Next
+    </button>
+  </div>
+  <amp-state id="page"
+             src="'/a/' + coin + '/blocks/' + perPage + '/' + pageNumber" 
+             [src]="'/a/' + coin + '/blocks/' + perPage + '/' + pageNumber">
+  </amp-state>
+
+
+
+    <button on="tap:AMP.setState({showAddNode: true})" class="add">Add Node</button>

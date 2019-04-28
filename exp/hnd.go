@@ -21,16 +21,21 @@ import (
 // 	GetMiningInfo() interface{}
 // 	GetInfo() interface{}
 // }
+// type ByValue []map[string]interface{}
 
-func (node *Node) GetBlockCount() (b int) {
-	jrc := utl.NewClient(node.RPCUser, node.RPCPassword, node.IP, node.Port)
+// func (a ByValue) Len() int           { return len(a) }
+// func (a ByValue) Less(i, j int) bool { return a[i] < a[j] }
+// func (a ByValue) Swap(i, j int)      { a[i], a[j] = a[j], a[i] }
+
+func (n *Node) GetBlockCount() (b int) {
+	jrc := utl.NewClient(n.RPCUser, n.RPCPassword, n.IP, n.Port)
 	if jrc == nil {
-		fmt.Println("Error node status write")
+		fmt.Println("Error n status write")
 	}
 	bparams := []int{}
 	gbc, err := jrc.MakeRequest("getblockcount", bparams)
 	if err != nil {
-		fmt.Println("Error node call: ", err)
+		fmt.Println("Error n call: ", err)
 
 	}
 	switch gbc.(type) {
@@ -46,23 +51,39 @@ func (node *Node) GetBlockCount() (b int) {
 	return
 }
 
-func (node *Node) GetLastBlocks() *map[int]map[string]interface{} {
-	lb := make(map[int]map[string]interface{})
-	blockcount := SrcNode().GetBlockCount()
-	minusblockcount := int(blockcount - 100)
-	for ibh := minusblockcount; ibh <= blockcount; {
+func (n *Node) GetBlocks(per, page int) []map[string]interface{} {
+	var lb []map[string]interface{}
+	fmt.Println("asassaaaablockCountblockCountaaaa", n)
+	blockCount := n.GetBlockCount()
+
+	startBlock := blockCount - per*page
+	minusBlockStart := int(startBlock - per)
+	for ibh := startBlock; ibh >= minusBlockStart; {
 		var blk map[string]interface{}
-		blk = (SrcNode().GetBlockByHeight(ibh)).(map[string]interface{})
-		lb[ibh] = blk
-		ibh++
+		blk = (SrcNode(n.Coin).GetBlockByHeight(ibh)).(map[string]interface{})
+		lb = append(lb, blk)
+		ibh--
 	}
-	return &lb
+	return lb
 }
 
-func (node *Node) GetBlock(blockhash string) interface{} {
-	jrc := utl.NewClient(node.RPCUser, node.RPCPassword, node.IP, node.Port)
+// func (n *Node) GetLastBlocks() []map[string]interface{} {
+// 	var lb []map[string]interface{}
+// 	blockcount := SrcNode().GetBlockCount()
+// 	minusblockcount := int(blockcount - 19)
+// 	for ibh := blockcount; ibh >= minusblockcount; {
+// 		var blk map[string]interface{}
+// 		blk = (SrcNode().GetBlockByHeight(ibh)).(map[string]interface{})
+// 		lb = append(lb, blk)
+// 		ibh--
+// 	}
+// 	return lb
+// }
+
+func (n *Node) GetBlock(blockhash string) interface{} {
+	jrc := utl.NewClient(n.RPCUser, n.RPCPassword, n.IP, n.Port)
 	if jrc == nil {
-		fmt.Println("Error node status write")
+		fmt.Println("Error n status write")
 	}
 	bparams := []string{blockhash}
 	block, err := jrc.MakeRequest("getblock", bparams)
@@ -72,10 +93,10 @@ func (node *Node) GetBlock(blockhash string) interface{} {
 	return block
 }
 
-func (node *Node) GetBlockTxAddr(blockheight int) interface{} {
-	jrc := utl.NewClient(node.RPCUser, node.RPCPassword, node.IP, node.Port)
+func (n *Node) GetBlockTxAddr(blockheight int) interface{} {
+	jrc := utl.NewClient(n.RPCUser, n.RPCPassword, n.IP, n.Port)
 	if jrc == nil {
-		fmt.Println("Error node status write")
+		fmt.Println("Error n status write")
 	}
 	//bh, err := strconv.Atoi(blockheight)
 	//bparams := []int{bh}
@@ -87,7 +108,7 @@ func (node *Node) GetBlockTxAddr(blockheight int) interface{} {
 	var block interface{}
 	var txs []interface{}
 	if blockHash != nil {
-		block = node.GetBlock((blockHash).(string))
+		block = n.GetBlock((blockHash).(string))
 	}
 	iblock := make(map[string]interface{})
 	iblock = block.(map[string]interface{})
@@ -119,10 +140,10 @@ func (node *Node) GetBlockTxAddr(blockheight int) interface{} {
 	}
 	return blocktxaddr
 }
-func (node *Node) GetBlockByHeight(blockheight int) interface{} {
-	jrc := utl.NewClient(node.RPCUser, node.RPCPassword, node.IP, node.Port)
+func (n *Node) GetBlockByHeight(blockheight int) interface{} {
+	jrc := utl.NewClient(n.RPCUser, n.RPCPassword, n.IP, n.Port)
 	if jrc == nil {
-		fmt.Println("Error node status write")
+		fmt.Println("Error n status write")
 	}
 	//bh, err := strconv.Atoi(blockheight)
 	//bparams := []int{bh}
@@ -133,14 +154,14 @@ func (node *Node) GetBlockByHeight(blockheight int) interface{} {
 	}
 	var block interface{}
 	if blockHash != nil {
-		block = node.GetBlock((blockHash).(string))
+		block = n.GetBlock((blockHash).(string))
 	}
 	return block
 }
-func (node *Node) GetTx(txid string) interface{} {
-	jrc := utl.NewClient(node.RPCUser, node.RPCPassword, node.IP, node.Port)
+func (n *Node) GetTx(txid string) interface{} {
+	jrc := utl.NewClient(n.RPCUser, n.RPCPassword, n.IP, n.Port)
 	if jrc == nil {
-		fmt.Println("Error node status write")
+		fmt.Println("Error n status write")
 	}
 	verbose := int(1)
 	var grtx []interface{}
@@ -156,7 +177,7 @@ func (node *Node) GetTx(txid string) interface{} {
 	return rtx
 }
 
-// func (node *Node) GetAddr(addr string) interface{} {
+// func (n *Node) GetAddr(addr string) interface{} {
 
 // aD := exJDB.EJDBGetAddr(addr)
 // if aD.Addr == "" {
@@ -164,10 +185,10 @@ func (node *Node) GetTx(txid string) interface{} {
 // }
 // 	 return aD
 // }
-func (node *Node) GetRawMemPool() interface{} {
-	jrc := utl.NewClient(node.RPCUser, node.RPCPassword, node.IP, node.Port)
+func (n *Node) GetRawMemPool() interface{} {
+	jrc := utl.NewClient(n.RPCUser, n.RPCPassword, n.IP, n.Port)
 	if jrc == nil {
-		fmt.Println("Error node status write")
+		fmt.Println("Error n status write")
 	}
 	bparams := []int{}
 	get, err := jrc.MakeRequest("getrawmempool", bparams)
@@ -177,10 +198,10 @@ func (node *Node) GetRawMemPool() interface{} {
 	return get
 }
 
-func (node *Node) GetMiningInfo() interface{} {
-	jrc := utl.NewClient(node.RPCUser, node.RPCPassword, node.IP, node.Port)
+func (n *Node) GetMiningInfo() interface{} {
+	jrc := utl.NewClient(n.RPCUser, n.RPCPassword, n.IP, n.Port)
 	if jrc == nil {
-		fmt.Println("Error node status write")
+		fmt.Println("Error n status write")
 	}
 	bparams := []int{}
 	get, err := jrc.MakeRequest("getmininginfo", bparams)
@@ -190,10 +211,10 @@ func (node *Node) GetMiningInfo() interface{} {
 	return get
 }
 
-func (node *Node) GetInfo() interface{} {
-	jrc := utl.NewClient(node.RPCUser, node.RPCPassword, node.IP, node.Port)
+func (n *Node) GetInfo() interface{} {
+	jrc := utl.NewClient(n.RPCUser, n.RPCPassword, n.IP, n.Port)
 	if jrc == nil {
-		fmt.Println("Error node status write")
+		fmt.Println("Error n status write")
 	}
 	bparams := []int{}
 	get, err := jrc.MakeRequest("getinfo", bparams)
@@ -202,10 +223,10 @@ func (node *Node) GetInfo() interface{} {
 	}
 	return get
 }
-func (node *Node) GetPeerInfo() interface{} {
-	jrc := utl.NewClient(node.RPCUser, node.RPCPassword, node.IP, node.Port)
+func (n *Node) GetPeerInfo() interface{} {
+	jrc := utl.NewClient(n.RPCUser, n.RPCPassword, n.IP, n.Port)
 	if jrc == nil {
-		fmt.Println("Error node status write")
+		fmt.Println("Error n status write")
 	}
 	bparams := []int{}
 	get, err := jrc.MakeRequest("getpeerinfo", bparams)

@@ -1,39 +1,42 @@
-<amp-list width="600" height="600" layout="responsive" [src]="'/a/tx/'+ id" items="d" single-item class="cgl">
+<amp-list width="400" height="600" layout="responsive" [src]="'/a/' + coin + '/tx/'+ id" items="d" single-item class="cgl">
 <template type="amp-mustache">
-Transaction
-<amp-fit-text width="320" height="8" layout="responsive" min-font-size="8" [text]="id"></amp-fit-text>
-<table class="table table-hover">
+
+<h1>Transaction <amp-fit-text layout="responsive" width="256" height="8" min-font-size="8" [text]="id"></amp-fit-text></h1>
+
+<table>
 <tbody>
-{{`{{#blockhash}}`}}<tr><td>Block hash</td><td>{{template "blockhash_html" .}}</td></tr>{{`{{/blockhash}}`}}
-{{`{{#blocktime}}`}}<tr><td>Block time</td><td>{{`{{blocktime}}`}}</td></tr>{{`{{/blocktime}}`}}
-{{`{{#confirmations}}`}}<tr><td >Confirmations</td><td [text]="{{`{{confirmations}}`}}"></td></tr>{{`{{/confirmations}}`}}
+{{`{{#blockhash}}`}}<tr><th>Block hash</th><td>{{template "blockhash_html" .}}</td></tr>{{`{{/blockhash}}`}}
+{{`{{#blocktime}}`}}<tr><th>Block time</th><td>{{`{{blocktime}}`}}</td></tr>{{`{{/blocktime}}`}}
+{{`{{#confirmations}}`}}<tr><th>Confirmations</th><td [text]="{{`{{confirmations}}`}}"></td></tr>{{`{{/confirmations}}`}}
 <!--{{`{{#hex}}`}}<tr><td >Hex</td>
 <td><small>{{`{{hex}}`}}</small></td></tr>{{`{{/hex}}`}}-->
-{{`{{#locktime}}`}}<tr><td >Locktime</td><td>{{`{{locktime}}`}}</td></tr>{{`{{/locktime}}`}}
-{{`{{#time}}`}}<tr><td >Time</td><td>{{`{{time}}`}}</td></tr>{{`{{/time}}`}}
-{{`{{#txid}}`}}<tr><td >TXid</td><td>{{`{{txid}}`}}</td></tr>{{`{{/txid}}`}}
-{{`{{#version}}`}}<tr><td >Version</td><td [text]="{{`{{version}}`}}"></td></tr>{{`{{/version}}`}}
+{{`{{#locktime}}`}}<tr><th>Locktime</th><td>{{`{{locktime}}`}}</td></tr>{{`{{/locktime}}`}}
+{{`{{#time}}`}}<tr><th>Time</th><td>{{`{{time}}`}}</td></tr>{{`{{/time}}`}}
+{{`{{#txid}}`}}<tr><th>TXid</th><td><small>{{`{{txid}}`}}</small></td></tr>{{`{{/txid}}`}}
+{{`{{#version}}`}}<tr><th>Version</th><td [text]="{{`{{version}}`}}"></td></tr>{{`{{/version}}`}}
 
 
-{{`{{#vin}}`}}<tr><td>Value in</td><td class="wbr">{{`{{#vin}}`}}
-      {{`{{#coinbase}}`}}Coinbase: {{`{{coinbase}}`}}{{`{{/coinbase}}`}}
-      {{`{{#sequence}}`}}Sequence: {{`{{sequence}}`}}{{`{{/sequence}}`}}
+{{`{{#vin}}`}}<tr><th>Value in</th><td>{{`{{#vin}}`}}
+<table><tbody>
+      {{`{{#coinbase}}`}}<tr><th>Coinbase:</th><td><pre>{{`{{coinbase}}`}}</pre></td></tr>{{`{{/coinbase}}`}}
+      {{`{{#sequence}}`}}<tr><th>Sequence:</th><td>{{`{{sequence}}`}}</td></tr>{{`{{/sequence}}`}}
+</tbody></table>
 {{`{{/vin}}`}}</td></tr>{{`{{/vin}}`}}
 
 
-{{`{{#vout}}`}}<tr><td >Value out</td>       
-       <td>{{`{{#vout}}`}}
+{{`{{#vout}}`}}<tr><th>Value out</th>       
+       <td>{{`{{#vout}}`}}<table><tbody>
         {{`{{#n}}`}}N: {{`{{n}}`}} {{`{{/n}}`}}<br>
           {{`{{#scriptPubKey}}`}}
-              {{`{{#addresses}}`}}Addresses: {{template "addr_html" .}}{{`{{/addresses}}`}}<br>
-              {{`{{#asm}}`}}ASM: <small class="wbk" [text]="{{`{{asm}}`}}"></small>{{`{{/asm}}`}}<br>
-              {{`{{#hex}}`}}hex: {{`{{hex}}`}} {{`{{/hex}}`}}<br>
-                {{`{{#reqSigs}}`}}ReqSigs: {{`{{reqSigs}}`}} {{`{{/reqSigs}}`}}<br>
-                {{`{{#type}}`}}Type: {{`{{type}}`}} {{`{{/type}}`}}<br>
+              {{`{{#addresses}}`}}<tr><th>Addresses:</th><td>{{`{{#addresses}}`}}{{template "addr_html" .}}<br>{{`{{/addresses}}`}}</td></tr>{{`{{/addresses}}`}}
+              {{`{{#asm}}`}}<tr><th>ASM:</th><td><small><pre>{{`{{asm}}`}}</pre></small></td></tr>{{`{{/asm}}`}}
+              {{`{{#hex}}`}}<tr><th>hex:</th><td><pre>{{`{{hex}}`}}</pre></td></tr>{{`{{/hex}}`}}
+                {{`{{#reqSigs}}`}}<tr><th>ReqSigs:</th><td>{{`{{reqSigs}}`}}</td></tr>{{`{{/reqSigs}}`}}
+                {{`{{#type}}`}}<tr><th>Type:</th><td>{{`{{type}}`}}</td></tr>{{`{{/type}}`}}
         {{`{{/scriptPubKey}}`}} 
           <hr>
-    {{`{{#value}}`}}Value: {{`{{value}}`}} {{`{{/value}}`}}<br>
-
+    {{`{{#value}}`}}<tr><th>Value:</th><td>{{`{{value}}`}}</td></tr>{{`{{/value}}`}}
+</tbody></table>
       {{`{{/vout}}`}}</td></tr>{{`{{/vout}}`}}
 </tbody>
 </table></template></amp-list>

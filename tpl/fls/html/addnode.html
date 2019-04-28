@@ -1,14 +1,16 @@
-<div class="column col-3">
+<amp-lightbox id="my-bindable-lightbox" [open]="showAddNode" layout="nodisplay">
+<div class="lightbox" role="button" tabindex="0"><section  layout="container">
 <form method="post"
-      action-xhr="/addnode"
+      action-xhr="/a/addnode"
       target="_top">
     <fieldset>
+        <input type="text" name="coin" id="coin" [value]="coin" required>
         <label><span>NodeID</span><input type="text" name="nodeid" id="nodeid" required></label><br>
         <label><span>RPCUser</span><input type="text" name="rpcuser" id="rpcuser" required></label><br>
         <label><span>RPCPassword</span><input type="text" name="rpcpassword" id="rpcpassword" required></label><br>
         <label><span>IP</span><input type="text" name="ip" id="ip" required></label><br>
         <label><span>Port</span><input type="number" name="port" id="port" required></label><br>
-        <label><span>Save</span><input type="submit" value="Save"></label><br>
+        <label><input type="submit" value="Save" on="tap:AMP.setState({tp: 'explorer', showAddNode: false}),blocks.refresh"></label><br>
+        <label><span on="tap:AMP.setState({showAddNode: false})">Cancel</span></label>
     </fieldset>
-</form>
-</div>
+</form></section></div></amp-lightbox></section>

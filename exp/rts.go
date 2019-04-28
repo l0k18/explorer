@@ -20,9 +20,29 @@ import (
 // }
 // var aNode = aNode()
 
-func LastBlock(w http.ResponseWriter, r *http.Request) {
+func ViewCoins(w http.ResponseWriter, r *http.Request) {
+	c := map[string]interface{}{
+		"d": map[string]interface{}{
+			"coins": Coins(),
+		},
+	}
+	out, err := json.Marshal(c)
+	if err != nil {
+		fmt.Println("Error encoding JSON")
+		return
+	}
+	w.Write([]byte(out))
+}
+func ViewBlocks(w http.ResponseWriter, r *http.Request) {
+	v := mux.Vars(r)
+	per, _ := strconv.Atoi(v["per"])
+	page, _ := strconv.Atoi(v["page"])
 	lb := map[string]interface{}{
-		"d": SrcNode().GetLastBlocks(),
+		"d": map[string]interface{}{
+			"currentPage": page,
+			"pageCount":   SrcNode(v["coin"]).GetBlockCount() / per,
+			"blocks":      SrcNode(v["coin"]).GetBlocks(per, page),
+		},
 	}
 	out, err := json.Marshal(lb)
 	if err != nil {
@@ -32,9 +52,9 @@ func LastBlock(w http.ResponseWriter, r *http.Request) {
 	w.Write([]byte(out))
 }
 
-func Block(w http.ResponseWriter, r *http.Request) {
-	// node := Node{}
-	lastblock := SrcNode().GetBlockCount()
+func ViewBlock(w http.ResponseWriter, r *http.Request) {
+	v := mux.Vars(r)
+	lastblock := SrcNode(v["coin"]).GetBlockCount()
 
 	bl := map[string]interface{}{
 		"d": lastblock,
@@ -47,12 +67,12 @@ func Block(w http.ResponseWriter, r *http.Request) {
 	w.Write([]byte(out))
 }
 
-func BlockHeight(w http.ResponseWriter, r *http.Request) {
-	vars := mux.Vars(r)
-	bh := vars["blockheight"]
+func ViewBlockHeight(w http.ResponseWriter, r *http.Request) {
+	v := mux.Vars(r)
+	bh := v["blockheight"]
 	// node := Node{}
 	bhi, _ := strconv.Atoi(bh)
-	block := SrcNode().GetBlockByHeight(bhi)
+	block := SrcNode(v["coin"]).GetBlockByHeight(bhi)
 	bl := map[string]interface{}{
 		"d": block,
 	}
@@ -64,13 +84,13 @@ func BlockHeight(w http.ResponseWriter, r *http.Request) {
 	w.Write([]byte(out))
 }
 
-func BHeight(w http.ResponseWriter, r *http.Request) {
-	vars := mux.Vars(r)
-	bh := vars["blockheight"]
+func ViewHeight(w http.ResponseWriter, r *http.Request) {
+	v := mux.Vars(r)
+	bh := v["blockheight"]
 	// node := Node{}
 
 	bhi, _ := strconv.Atoi(bh)
-	block := SrcNode().GetBlockTxAddr(bhi)
+	block := SrcNode(v["coin"]).GetBlockTxAddr(bhi)
 	bl := map[string]interface{}{
 		"d": block,
 	}
@@ -82,23 +102,23 @@ func BHeight(w http.ResponseWriter, r *http.Request) {
 	w.Write([]byte(out))
 }
 
-func Hash(w http.ResponseWriter, r *http.Request) {
-	vars := mux.Vars(r)
-	bh := vars["blockhash"]
+func ViewHash(w http.ResponseWriter, r *http.Request) {
+	v := mux.Vars(r)
+	bh := v["blockhash"]
 	// node := Node{}
 
-	block := SrcNode().GetBlock(bh)
+	block := SrcNode(v["coin"]).GetBlock(bh)
 	b := block.(map[string]interface{})
 	h := b["height"].(string)
 	http.Redirect(w, r, "/a/block/"+h, 301)
 }
 
-func Tx(w http.ResponseWriter, r *http.Request) {
-	vars := mux.Vars(r)
-	txid := vars["txid"]
+func ViewTx(w http.ResponseWriter, r *http.Request) {
+	v := mux.Vars(r)
+	txid := v["txid"]
 	// node := Node{}
 
-	tX := SrcNode().GetTx(txid)
+	tX := SrcNode(v["coin"]).GetTx(txid)
 
 	tx := map[string]interface{}{
 		"d": tX,
@@ -110,9 +130,9 @@ func Tx(w http.ResponseWriter, r *http.Request) {
 	}
 	w.Write([]byte(out))
 }
-func RawMemPool(w http.ResponseWriter, r *http.Request) {
-	// node := Node{}
-	rawMemPool := SrcNode().GetRawMemPool()
+func ViewRawMemPool(w http.ResponseWriter, r *http.Request) {
+	v := mux.Vars(r)
+	rawMemPool := SrcNode(v["coin"]).GetRawMemPool()
 	rmp := map[string]interface{}{
 		"d": rawMemPool,
 	}
@@ -123,9 +143,9 @@ func RawMemPool(w http.ResponseWriter, r *http.Request) {
 	}
 	w.Write([]byte(out))
 }
-func MiningInfo(w http.ResponseWriter, r *http.Request) {
-	// node := Node{}
-	miningInfo := SrcNode().GetMiningInfo()
+func ViewMiningInfo(w http.ResponseWriter, r *http.Request) {
+	v := mux.Vars(r)
+	miningInfo := SrcNode(v["coin"]).GetMiningInfo()
 
 	mi := map[string]interface{}{
 		"d": miningInfo,
@@ -137,9 +157,9 @@ func MiningInfo(w http.ResponseWriter, r *http.Request) {
 	}
 	w.Write([]byte(out))
 }
-func Info(w http.ResponseWriter, r *http.Request) {
-	// node := Node{}
-	info := SrcNode().GetInfo()
+func ViewInfo(w http.ResponseWriter, r *http.Request) {
+	v := mux.Vars(r)
+	info := SrcNode(v["coin"]).GetInfo()
 
 	in := map[string]interface{}{
 		"d": info,
@@ -151,9 +171,9 @@ func Info(w http.ResponseWriter, r *http.Request) {
 	}
 	w.Write([]byte(out))
 }
-func Peers(w http.ResponseWriter, r *http.Request) {
-	// node := Node{}
-	info := SrcNode().GetPeerInfo()
+func ViewPeers(w http.ResponseWriter, r *http.Request) {
+	v := mux.Vars(r)
+	info := SrcNode(v["coin"]).GetPeerInfo()
 	pi := map[string]interface{}{
 		"d": info,
 	}
@@ -164,7 +184,7 @@ func Peers(w http.ResponseWriter, r *http.Request) {
 	}
 	w.Write([]byte(out))
 }
-func Address(w http.ResponseWriter, r *http.Request) {
+func ViewAddress(w http.ResponseWriter, r *http.Request) {
 	// vars := mux.Vars(r)
 
 	// addr := vars["addr"]

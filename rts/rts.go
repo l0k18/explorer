@@ -18,31 +18,33 @@ func RTS() *mux.Router {
 	// 	AllowCredentials: true,
 	// })
 
-	r.HandleFunc("/addnode", EnableCors(NodeAdd)).Methods("POST")
-
 	////////////////
 
-	// r.HandleFunc("/a/last", apiLast)
-	// r.HandleFunc("/a/info", apiInfo)
-	// r.HandleFunc("/a/mining", apiMiningInfo)
-	// r.HandleFunc("/a/rawpool", apiRawPool)
+	// r.HandleFunc("/{coin}/last", apiLast)
+	// r.HandleFunc("/{coin}/info", apiInfo)
+	// r.HandleFunc("/{coin}/mining", apiMiningInfo)
+	// r.HandleFunc("/{coin}/rawpool", apiRawPool)
 	// r.HandleFunc("/search", doSearch)
 
 	//////////////
+	a := r.PathPrefix("/a").Subrouter()
+	r.HandleFunc("/addcoin", EnableCors(AddCoin)).Methods("POST")
+	a.HandleFunc("/coins", exp.ViewCoins).Methods("GET")
 
-	r.HandleFunc("/a/last", exp.LastBlock).Methods("GET")
-	r.HandleFunc("/a/b", exp.Block).Methods("GET")
-	r.HandleFunc("/a/block/{blockheight}", exp.BlockHeight).Methods("GET")
-	r.HandleFunc("/a/b/{blockheight}", exp.BHeight).Methods("GET")
-	r.HandleFunc("/a/hash/{blockhash}", exp.Hash).Methods("GET")
+	r.HandleFunc("/{coin}/addnode", EnableCors(AddNode)).Methods("POST")
+	a.HandleFunc("/{coin}/blocks/{per}/{page}", exp.ViewBlocks).Methods("GET")
+	a.HandleFunc("/{coin}/b", exp.ViewBlock).Methods("GET")
+	a.HandleFunc("/{coin}/block/{blockheight}", exp.ViewBlockHeight).Methods("GET")
+	a.HandleFunc("/{coin}/b/{blockheight}", exp.ViewHeight).Methods("GET")
+	a.HandleFunc("/{coin}/hash/{blockhash}", exp.ViewHash).Methods("GET")
 
-	r.HandleFunc("/a/tx/{txid}", exp.Tx).Methods("GET")
-	r.HandleFunc("/a/rawpool", exp.RawMemPool).Methods("GET")
-	r.HandleFunc("/a/mining", exp.MiningInfo).Methods("GET")
-	r.HandleFunc("/a/info", exp.Info).Methods("GET")
-	r.HandleFunc("/a/peer", exp.Peers).Methods("GET")
-	r.HandleFunc("/a/addr/{addr}", exp.Address).Methods("GET")
+	a.HandleFunc("/{coin}/tx/{txid}", exp.ViewTx).Methods("GET")
+	a.HandleFunc("/{coin}/rawpool", exp.ViewRawMemPool).Methods("GET")
+	a.HandleFunc("/{coin}/mining", exp.ViewMiningInfo).Methods("GET")
+	a.HandleFunc("/{coin}/info", exp.ViewInfo).Methods("GET")
+	a.HandleFunc("/{coin}/peer", exp.ViewPeers).Methods("GET")
+	a.HandleFunc("/{coin}/addr/{addr}", exp.ViewAddress).Methods("GET")
 
-	// r.HandleFunc("/a/{type}/{id}", apiData)
+	// r.HandleFunc("/{coin}/{type}/{id}", apiData)
 	return r
 }

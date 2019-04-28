@@ -1,0 +1,12 @@
+<amp-lightbox id="my-bindable-lightbox" [open]="showAddCoin" layout="nodisplay">
+<div class="lightbox" role="button" tabindex="0"><section  layout="container">
+<form method="post"
+      action-xhr="/a/addcoin"
+      target="_top">
+    <fieldset>
+        <label><span>Coin Name</span><input type="text" name="name" id="name" required></label>
+        <label><span>Abbrevation</span><input type="text" name="abbr" id="abbr" required></label>
+        <label><span>Richlist Multiple</span><input type="number" name="x" id="x" required></label>
+        <label><input type="submit" value="Save" on="tap:AMP.setState({tp: 'home', showAddCoin: false}),coins.refresh"></label>
+    </fieldset>
+</form></section></div></amp-lightbox></section>

@@ -6,21 +6,15 @@ import (
 	"git.parallelcoin.io/marcetin/explorer/jdb"
 )
 
-type Addr struct {
-	Address string  `json:"nodeid" form:"addr"`
-	Value   float64 `json:"nodeid" form:"value"`
-	Rank    int     `json:"nodeid" form:"rank"`
-}
-
-func (node *Node) GetAddrs() {
+func (n *Node) GetAddrs() {
 	var AVS = make(map[string]float64)
-	last := SrcNode().GetBlockCount()
+	last := SrcNode(n.Coin).GetBlockCount()
 	for block := 0; block <= last; {
-		b := (SrcNode().GetBlockByHeight(block)).(map[string]interface{})
+		b := (SrcNode(n.Coin).GetBlockByHeight(block)).(map[string]interface{})
 		txs := (b["tx"]).([]interface{})
 		for _, tx := range txs {
 			t := tx.(string)
-			xt := SrcNode().GetTx(string(t))
+			xt := SrcNode(n.Coin).GetTx(string(t))
 			if xt != nil {
 				txm := xt.(map[string]interface{})
 				vout := txm["vout"].([]interface{})
@@ -42,5 +36,5 @@ func (node *Node) GetAddrs() {
 		}
 		block++
 	}
-	jdb.JDB.Write("addrs", "addrs", AVS)
+	jdb.JDB.Write("data/"+n.Coin+"/addrs", "addrs", AVS)
 }

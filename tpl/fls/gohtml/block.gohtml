@@ -1,26 +1,26 @@
-<amp-list width="600" height="600" layout="responsive" [src]="'/a/block/'+ id" items="d" single-item class="cgl">
+<amp-list width="400" height="600" layout="responsive" [src]="'/a/' + coin + '/block/'+ id" items="d" single-item class="cgl">
 
 <template type="amp-mustache">
-<h1>Block <amp-fit-text layout="container" min-font-size="8" [text]="id"></amp-fit-text></h1>
+<h1>Block <amp-fit-text layout="responsive" width="128" height="8" min-font-size="8" [text]="id"></amp-fit-text></h1>
 
 
 <table class="table table-hover"><tbody>
-{{`{{#bits}}`}}<tr><td ><strong>Bits</strong></td><td [text]="{{`{{bits}}`}}"></td></tr>{{`{{/bits}}`}}
-{{`{{#confirmations}}`}}<tr><td ><strong>Confirmations</strong></td><td [text]="{{`{{confirmations}}`}}"></td></tr>{{`{{/confirmations}}`}}
-{{`{{#difficulty}}`}}<tr><td ><strong>Difficulty</strong></td><td [text]="{{`{{difficulty}}`}}"></td></tr>{{`{{/difficulty}}`}}
-{{`{{#hash}}`}}<tr><td ><strong>Hash</strong></td><td>{{template "blockhash_html" .}}</td></tr>{{`{{/hash}}`}}
-{{`{{#height}}`}}<tr><td ><strong>Height</strong></td><td [text]="{{`{{height}}`}}"></td></tr>{{`{{/height}}`}}
-{{`{{#merkleroot}}`}}<tr><td ><strong>Merkle root</strong></td><td [text]="{{`{{merkleroot}}`}}"></td></tr>{{`{{/merkleroot}}`}}
-{{`{{#nextblockhash}}`}}<tr><td ><strong>Next block hash</strong></td><td>{{template "nextblockhash_html" .}}</td></tr>{{`{{/nextblockhash}}`}}
-{{`{{#nonce}}`}}<tr><td ><strong>Nonce</strong></td><td [text]="{{`{{nonce}}`}}"></td></tr>{{`{{/nonce}}`}}
-{{`{{#pow_algo}}`}}<tr><td ><strong>POW algo</strong></td><td [text]="{{`{{pow_algo}}`}}"></td></tr>{{`{{/pow_algo}}`}}
-{{`{{#pow_algo_id}}`}}<tr><td ><strong>POW algo id</strong></td><td [text]="{{`{{pow_algo_id}}`}}"></td></tr>{{`{{/pow_algo_id}}`}}
-{{`{{#pow_hash}}`}}<tr><td ><strong>POW hash</strong></td><td [text]="{{`{{pow_hash}}`}}"></td></tr>{{`{{/pow_hash}}`}}
-{{`{{#previousblockhash}}`}}<tr><td ><strong>Previous block hash</strong></td><td>{{template "previousblockhash_html" .}}</td></tr>{{`{{/previousblockhash}}`}}
-{{`{{#size}}`}}<tr><td ><strong>Size</strong></td><td [text]="{{`{{size}}`}}"></td></tr>{{`{{/size}}`}}
-{{`{{#time}}`}}<tr><td ><strong>Time</strong></td><td [text]="{{`{{time}}`}}"></td></tr>{{`{{/time}}`}}
-{{`{{#version}}`}}<tr><td ><strong>Version</strong></td><td [text]="{{`{{version}}`}}"></td></tr>{{`{{/version}}`}}
-{{`{{#tx}}`}}<tr><td ><strong>TXs</strong></td><td>{{`{{#tx}}`}}{{template "tx_html" .}}<br>{{`{{/tx}}`}}</td></tr>{{`{{/tx}}`}}
+{{`{{#bits}}`}}<tr><th>Bits</th><td>{{`{{bits}}`}}</td></tr>{{`{{/bits}}`}}
+{{`{{#confirmations}}`}}<tr><th>Confirmations</th><td [text]="{{`{{confirmations}}`}}"></td></tr>{{`{{/confirmations}}`}}
+{{`{{#difficulty}}`}}<tr><th>Difficulty</th><td [text]="{{`{{difficulty}}`}}"></td></tr>{{`{{/difficulty}}`}}
+{{`{{#hash}}`}}<tr><th>Hash</th><td>{{template "hash_html" .}}</td></tr>{{`{{/hash}}`}}
+{{`{{#height}}`}}<tr><th>Height</th><td [text]="{{`{{height}}`}}"></td></tr>{{`{{/height}}`}}
+{{`{{#merkleroot}}`}}<tr><th>Merkle root</th><td><pre>{{`{{merkleroot}}`}}</pre></td></tr>{{`{{/merkleroot}}`}}
+{{`{{#nextblockhash}}`}}<tr><th>Next block hash</th><td>{{template "nextblockhash_html" .}}</td></tr>{{`{{/nextblockhash}}`}}
+{{`{{#nonce}}`}}<tr><th>Nonce</th><td [text]="{{`{{nonce}}`}}"></td></tr>{{`{{/nonce}}`}}
+{{`{{#pow_algo}}`}}<tr><th>POW algo</th><td>{{`{{pow_algo}}`}}</td></tr>{{`{{/pow_algo}}`}}
+{{`{{#pow_algo_id}}`}}<tr><th>POW algo id</th><td>{{`{{pow_algo_id}}`}}</td></tr>{{`{{/pow_algo_id}}`}}
+{{`{{#pow_hash}}`}}<tr><th>POW hash</th><td><pre>{{`{{pow_hash}}`}}</pre></td></tr>{{`{{/pow_hash}}`}}
+{{`{{#previousblockhash}}`}}<tr><th>Previous block hash</th><td>{{template "previousblockhash_html" .}}</td></tr>{{`{{/previousblockhash}}`}}
+{{`{{#size}}`}}<tr><th>Size</th><td [text]="{{`{{size}}`}}"></td></tr>{{`{{/size}}`}}
+{{`{{#time}}`}}<tr><th>Time</th><td [text]="{{`{{time}}`}}"></td></tr>{{`{{/time}}`}}
+{{`{{#version}}`}}<tr><th>Version</th><td [text]="{{`{{version}}`}}"></td></tr>{{`{{/version}}`}}
+{{`{{#tx}}`}}<tr><th>TXs</th><td>{{`{{#tx}}`}}{{template "tx_html" .}}<br>{{`{{/tx}}`}}</td></tr>{{`{{/tx}}`}}
 </tbody></table>
 </template>
 </amp-list>
