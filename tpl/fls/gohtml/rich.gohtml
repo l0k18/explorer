@@ -1,21 +1,60 @@
 <h3>Top addreses</h3>
-<table>
-{{ range $key, $value := .RichList.full }}
-   <tr><td><strong>{{ $value.Rank }}</strong></td><td><button on="tap:AMP.setState({id: '{{ $value.Addr }}', tp: 'addr'})" class="addr">{{ $value.Addr }}</button></td><td>{{ $value.Value }}</td></tr>
-{{ end }}
-</table>
-{{template "rich_singles_html" .}}
+<amp-list width="600" height="600" layout="responsive" src="'/d/' + coin + '/richlist/full'" [src]="'/d/' + coin + '/richlist/full'" items="d" single-item class="cgl">
+<template type="amp-mustache"><ul class="flx"><li>
+<span>{{`{{ addr }}`}}</span>
+<span>{{`{{ value }}`}}</span>
+</li></ul></template>
+</amp-list>
+
+
+
+
+<amp-iframe width=640 height=480 layout="responsive" sandbox="allow-scripts allow-same-origin" src="'/c/' + coin + '/c_vega/richlist/full'" [src]="'/c/' + coin + '/c_vega/richlist/full'">
+<amp-img layout="fill" src="https://tpc.googlesyndication.com/simgad/15562493004927985521/downsize_200k_v1" placeholder></amp-img>
+</amp-iframe>
+
 <h3>Grouped addreses</h3>
-<table>
-{{ range $key, $value := .RichList.grouped }}
-   <tr><td><strong>{{ $value.Rank }}</strong></td><td><button on="tap:AMP.setState({id: '{{ $value.Addr }}', tp: 'addr'})" class="addr">{{ $value.Addr }}</button></td><td>{{ $value.Value }}</td></tr>
-{{ end }}
-</table>
-{{template "rich_grouped_html" .}}
+<amp-list width="600" height="600" layout="responsive" src="'/d/' + coin + '/richlist/grouped'" [src]="'/d/' + coin + '/richlist/grouped'" items="d" single-item class="cgl">
+<template type="amp-mustache"><ul class="flx"><li>
+<span>{{`{{ addr }}`}}</span>
+<span>{{`{{ value }}`}}</span>
+</li></ul></template>
+</amp-list>
+
+
+
+<amp-iframe width=640 height=480 layout="responsive" sandbox="allow-scripts allow-same-origin" src="'/c/' + coin + '/c_vega/richlist/grouped'" [src]="'/c/' + coin + '/c_vega/richlist/grouped'">
+<amp-img layout="fill" src="https://tpc.googlesyndication.com/simgad/15562493004927985521/downsize_200k_v1" placeholder></amp-img>
+</amp-iframe>
+
+
 <h3>Single addreses</h3>
-<table>
-{{ range $key, $value := .RichList.singles }}
-   <tr><td><strong>{{ $value.Rank }}</strong></td><td><button on="tap:AMP.setState({id: '{{ $value.Addr }}', tp: 'addr'})" class="addr">{{ $value.Addr }}</button></td><td>{{ $value.Value }}</td></tr>
-{{ end }}
-</table>
-{{template "rich_singles_html" .}}
+
+<amp-list width="600" height="600" layout="responsive" src="'/d/' + coin + '/richlist/singles'" [src]="'/d/' + coin + '/richlist/singles'" items="d" single-item class="cgl">
+<template type="amp-mustache"><ul class="flx"><li>
+<span>{{`{{ addr }}`}}</span>
+<span>{{`{{ value }}`}}</span>
+</li></ul></template>
+</amp-list>
+
+
+
+<amp-iframe width=640 height=480 layout="responsive" sandbox="allow-scripts allow-same-origin" src="'/c/' + coin + '/c_vega/richlist/singles'" [src]="'/c/' + coin + '/c_vega/richlist/singles'">
+<amp-img layout="fill" src="https://tpc.googlesyndication.com/simgad/15562493004927985521/downsize_200k_v1" placeholder></amp-img>
+</amp-iframe>
+
+
+<br>
+
+<br>
+
+<br>
+
+<br>
+
+<br>
+
+
+<amp-iframe width=640 height=480 layout="responsive" sandbox="allow-scripts allow-same-origin" src="'/c/' + coin + '/c_google/richlist/singles'" [src]="'/c/' + coin + '/c_google/richlist/singles'">
+<amp-img layout="fill" src="https://tpc.googlesyndication.com/simgad/5420691153688401083" placeholder></amp-img>
+</amp-iframe>

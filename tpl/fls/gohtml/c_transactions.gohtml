@@ -1,0 +1,154 @@
+<html><head>
+  <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+  <title>Bitcoin Realtime Bubbles</title>
+  <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+  <meta name="robots" content="noindex, nofollow">
+  <meta name="googlebot" content="noindex, nofollow">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+
+  <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/mootools/1.4.5/mootools-core-full-nocompat.js"></script>
+
+    <link rel="stylesheet" type="text/css" href="/css/result-light.css">
+
+      <script type="text/javascript" src="https://d3js.org/d3.v4.min.js"></script>
+
+  <style id="compiled-css" type="text/css">
+      .vizCanvas {
+  background-color:black;
+}
+  </style>
+
+
+  <!-- TODO: Missing CoffeeScript 2 -->
+
+  <script type="text/javascript">
+
+
+    window.addEvent('load', function() {
+      
+
+
+    });
+
+</script>
+
+</head>
+<body>
+            <title>Realtime Bitcoin Transactions</title>
+         <div>
+          <button onclick="start()">Start</button>
+          <button onclick="stop()">Stop</button>
+        </div>
+        <p id="status">Connected</p>
+        <svg width="400" height="400" id="bubbleCanvas" class="vizCanvas"><g class="nodes"></g></svg>
+        <script>
+          var txNodes = [];
+            
+          var svg = d3.select("#bubbleCanvas"),
+              width = +svg.attr("width"),
+              height = +svg.attr("height");
+          var centerX = width / 2.0;
+          var centerY = height / 2.0;
+          var counter = 0;
+          
+          var node = svg.append("g")
+              .attr("class", "nodes")
+              .selectAll("circle");
+              
+        var bubbleSimulation = d3.forceSimulation(txNodes)
+            .force("charge", d3.forceManyBody().strength(-3))
+            .force("x", d3.forceX())
+            .force("y", d3.forceY())
+            .force("collision", d3.forceCollide(function radius(d,i){return d.scaledValue;}))
+            .alphaTarget(1)
+            .on("tick", bubblesTicked);
+                          
+        		var websocket;
+            
+            function init() {          
+              websocket = new WebSocket("wss://ws.blockchain.info/inv");
+            
+              websocket.onopen = function() { 
+                document.getElementById("status").innerHTML ="Connected"; 
+                };
+                
+             	websocket.onerror = function(event) { 
+                document.getElementById("status").innerHTML = "Error"; 
+              };
+
+              websocket.onmessage = function(event) { 
+              	//message processing code goes here
+                var msgData = JSON.parse(event.data);
+                if (msgData.op == 'utx'){
+                  var txHash = msgData.x.hash;
+                	var outputs = msgData.x.out;
+                  var totalTxValue = 0;               
+                  for(var j=0;j<outputs.length;j++){
+                		var output = outputs[j];
+                    totalTxValue += output.value;
+                	}
+                  totalTxValue /= 100000000;
+                  var newTx = {id:txHash, value: totalTxValue, scaledValue: 5 + Math.log(totalTxValue) };
+                  txNodes.push(newTx);
+                  if (txNodes.length > 400)
+                  {
+                  		txNodes.shift();
+                  }
+                  bubblesRestart();
+                       
+                  document.getElementById("status").innerHTML = "tx: " + txHash;
+
+                }
+              };                          
+            };
+            
+            function sendMessage(message) {
+              document.getElementById("output").innerHTML = message;      
+              websocket.send(message);
+            }
+                        
+        function bubblesRestart() {
+          var updateSelection = node.data(txNodes, function(d) { return d.id;}); //updated transactions
+        	updateSelection.exit().remove(); //removed transactions
+          var enterSelection = updateSelection.enter()
+          .append("circle")
+          .attr("r", function(d){return d.scaledValue;})
+          .attr("fill",function(d){return d3.hsl(180 + Math.min(d.value * 4, 180),1,0.5);}); //new transactions
+          node = updateSelection.merge(enterSelection);
+          bubbleSimulation.nodes(txNodes);
+          bubbleSimulation.alpha(1).restart();
+        }
+
+         function bubblesTicked() {
+            node.attr("cx", function(d) { return d.x + centerX; })
+            .attr("cy", function(d) { return d.y + centerY; });
+          }
+            
+            function start() {
+            websocket.send('{"op":"unconfirmed_sub"}');
+            }
+            
+            function stop() {
+            	websocket.send('{"op":"unconfirmed_unsub"}');
+            }
+                  
+            window.addEventListener("load", init, false);
+        </script>
+
+  
+  <script>
+    // tell the embed parent frame the height of the content
+    if (window.parent && window.parent.parent){
+      window.parent.parent.postMessage(["resultsFrame", {
+        height: document.body.getBoundingClientRect().height,
+        slug: "u1c5e1mp"
+      }], "*")
+    }
+
+    // always overwrite window.name, in case users try to set it manually
+    window.name = "result"
+  </script>
+
+
+</body></html>

@@ -3,40 +3,69 @@
 
 <h1>Transaction <amp-fit-text layout="responsive" width="256" height="8" min-font-size="8" [text]="id"></amp-fit-text></h1>
 
-<table>
-<tbody>
-{{`{{#blockhash}}`}}<tr><th>Block hash</th><td>{{template "blockhash_html" .}}</td></tr>{{`{{/blockhash}}`}}
-{{`{{#blocktime}}`}}<tr><th>Block time</th><td>{{`{{blocktime}}`}}</td></tr>{{`{{/blocktime}}`}}
-{{`{{#confirmations}}`}}<tr><th>Confirmations</th><td [text]="{{`{{confirmations}}`}}"></td></tr>{{`{{/confirmations}}`}}
-<!--{{`{{#hex}}`}}<tr><td >Hex</td>
-<td><small>{{`{{hex}}`}}</small></td></tr>{{`{{/hex}}`}}-->
-{{`{{#locktime}}`}}<tr><th>Locktime</th><td>{{`{{locktime}}`}}</td></tr>{{`{{/locktime}}`}}
-{{`{{#time}}`}}<tr><th>Time</th><td>{{`{{time}}`}}</td></tr>{{`{{/time}}`}}
-{{`{{#txid}}`}}<tr><th>TXid</th><td><small>{{`{{txid}}`}}</small></td></tr>{{`{{/txid}}`}}
-{{`{{#version}}`}}<tr><th>Version</th><td [text]="{{`{{version}}`}}"></td></tr>{{`{{/version}}`}}
+
+<ul class="flx">
+{{`{{#blockhash}}`}}<li>Block hash{{template "blockhash_html" .}}</li>{{`{{/blockhash}}`}}
+{{`{{#hash}}`}}<li>Block hash{{template "hash_html" .}}</li>{{`{{/hash}}`}}
+{{`{{#blocktime}}`}}<li>Block time{{`{{blocktime}}`}}</li>{{`{{/blocktime}}`}}
+{{`{{#confirmations}}`}}<li>Confirmations<span [text]="{{`{{confirmations}}`}}"></span></li>{{`{{/confirmations}}`}}
+<li><ul class="flx hor grb">
+
+{{`{{#locktime}}`}}<li>Locktime<span>{{`{{locktime}}`}}</span></li>{{`{{/locktime}}`}}
+{{`{{#version}}`}}<li>Version<span [text]="{{`{{version}}`}}"></span></li>{{`{{/version}}`}}
+  {{`{{#time}}`}}<li>Time<span>{{`{{time}}`}}</span></li>{{`{{/time}}`}}
+    {{`{{#vsize}}`}}<li>V Size:<span>{{`{{vsize}}`}}</span></li>{{`{{/vsize}}`}}
+    {{`{{#weight}}`}}<li>Weight:<span>{{`{{weight}}`}}</span></li>{{`{{/weight}}`}}
+</ul></li>
+
+{{`{{#txid}}`}}<li>TXid{{template "txid_html" .}}</li>{{`{{/txid}}`}}
+</ul>
+
+<h3>Value in</h3>
+{{`{{#vin}}`}}
+<details>
+  <summary>
+<ul class="flx bsd">
+      {{`{{#vin.coinbase}}`}}<li>Coinbase:<pre>{{`{{coinbase}}`}}</pre></li>{{`{{/vin.coinbase}}`}}
+      {{`{{#sequence}}`}}<li>Sequence:<span>{{`{{sequence}}`}}</span></li>{{`{{/sequence}}`}}
+      {{`{{#txid}}`}}<li>TxID:{{template "txid_html" .}}</li>{{`{{/txid}}`}}
+      {{`{{#vout}}`}}<li>Value Out:<span>{{`{{scriptSig.vout}}`}}</span></li>{{`{{/vout}}`}}
+</ul>
+</summary>
+{{`{{#scriptSig}}`}}
+{{`{{#asm}}`}}ASM:<pre>{{`{{scriptSig.asm}}`}}</pre>{{`{{/asm}}`}}
+{{`{{#hex}}`}}Hex:<pre>{{`{{scriptSig.hex}}`}}</pre>{{`{{/hex}}`}}
+{{`{{/scriptSig}}`}}
+</details>
+{{`{{/vin}}`}}
 
 
-{{`{{#vin}}`}}<tr><th>Value in</th><td>{{`{{#vin}}`}}
-<table><tbody>
-      {{`{{#coinbase}}`}}<tr><th>Coinbase:</th><td><pre>{{`{{coinbase}}`}}</pre></td></tr>{{`{{/coinbase}}`}}
-      {{`{{#sequence}}`}}<tr><th>Sequence:</th><td>{{`{{sequence}}`}}</td></tr>{{`{{/sequence}}`}}
-</tbody></table>
-{{`{{/vin}}`}}</td></tr>{{`{{/vin}}`}}
-
-
-{{`{{#vout}}`}}<tr><th>Value out</th>       
-       <td>{{`{{#vout}}`}}<table><tbody>
-        {{`{{#n}}`}}N: {{`{{n}}`}} {{`{{/n}}`}}<br>
+<h3>Value out</h3>
+<ul class="flx col">
+{{`{{#vout}}`}}
+<li>
+<ul class="flx bsd grp">
           {{`{{#scriptPubKey}}`}}
-              {{`{{#addresses}}`}}<tr><th>Addresses:</th><td>{{`{{#addresses}}`}}{{template "addr_html" .}}<br>{{`{{/addresses}}`}}</td></tr>{{`{{/addresses}}`}}
-              {{`{{#asm}}`}}<tr><th>ASM:</th><td><small><pre>{{`{{asm}}`}}</pre></small></td></tr>{{`{{/asm}}`}}
-              {{`{{#hex}}`}}<tr><th>hex:</th><td><pre>{{`{{hex}}`}}</pre></td></tr>{{`{{/hex}}`}}
-                {{`{{#reqSigs}}`}}<tr><th>ReqSigs:</th><td>{{`{{reqSigs}}`}}</td></tr>{{`{{/reqSigs}}`}}
-                {{`{{#type}}`}}<tr><th>Type:</th><td>{{`{{type}}`}}</td></tr>{{`{{/type}}`}}
+<li>
+  <ul class="flx hor bgdark">
+                {{`{{#n}}`}}<li><span>Number:{{`{{n}}`}}</span></li>{{`{{/n}}`}}
+                {{`{{#value}}`}}<li><span>Value:{{`{{value}}`}}</span></li>{{`{{/value}}`}}
+                {{`{{#reqSigs}}`}}<li><span>ReqSigs: {{`{{scriptPubKey.reqSigs}}`}}</span></li>{{`{{/reqSigs}}`}}
+                {{`{{#type}}`}}<li><span>Type: {{`{{scriptPubKey.type}}`}}</span></li>{{`{{/type}}`}}
+</ul>          </li>
+<li>Addresses:{{`{{#scriptPubKey.addresses}}`}}{{template "addr_html" .}}<br>{{`{{/scriptPubKey.addresses}}`}}</li>
+
+              {{`{{#asm}}`}}<li>ASM:<pre>{{`{{scriptPubKey.asm}}`}}</pre></li>{{`{{/asm}}`}}
+              {{`{{#hex}}`}}<li>hex:<pre>{{`{{scriptPubKey.hex}}`}}</pre></li>{{`{{/hex}}`}}
+
         {{`{{/scriptPubKey}}`}} 
-          <hr>
-    {{`{{#value}}`}}<tr><th>Value:</th><td>{{`{{value}}`}}</td></tr>{{`{{/value}}`}}
-</tbody></table>
-      {{`{{/vout}}`}}</td></tr>{{`{{/vout}}`}}
-</tbody>
-</table></template></amp-list>
+</ul></li>
+{{`{{/vout}}`}}
+</ul>
+
+{{`{{#hex}}`}}<h5>Hex</h5><pre>{{`{{hex}}`}}</pre>{{`{{/hex}}`}}
+
+
+</template>
+<div overflow><button>Show more</button></div>
+</amp-list>

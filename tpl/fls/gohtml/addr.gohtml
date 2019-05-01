@@ -1,1 +1,11 @@
-sdsdsdsdsdsd
+<h3>Address</h3>
+<amp-list width="600" height="600" layout="responsive" 
+src="'/a/' + coin + '/addr/' + id" [src]="'/a/' + coin + '/addr/' + id" items="d" single-item>
+<template type="amp-mustache">
+<ul><li>
+<span>{{`{{ addr }}`}}</span><br><br>
+<span>{{`{{ value }}`}}</span><br><br>
+<span>{{`{{ #txs }}`}}{{`{{ . }}`}}<br><br>{{`{{ /txs }}`}}</span>
+</li></ul></template>
+</amp-list>
+

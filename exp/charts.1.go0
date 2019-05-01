@@ -1,0 +1,97 @@
+package exp
+
+import (
+	"encoding/json"
+	"fmt"
+	"net/http"
+
+	"git.parallelcoin.io/marcetin/explorer/jdb"
+	"git.parallelcoin.io/marcetin/explorer/tpl"
+	"github.com/gorilla/mux"
+)
+
+func GetChart(w http.ResponseWriter, r *http.Request) {
+	v := mux.Vars(r)
+	var rich []Addr
+	jdb.JDB.Read("data/"+v["coin"]+"/richlist", "full", &rich)
+
+	data := Chart{
+		Coin: v["coin"],
+		// Blocks:   []exp.Block{},
+		// AMP:   amp.AMPS(),
+		Data: rich,
+		// Template: tpl.TPLHandler().Templates,
+	}
+	tpl.TPLHandler().ExecuteTemplate(w, "chart_gohtml", data)
+}
+
+func GetChartData(w http.ResponseWriter, r *http.Request) {
+	v := mux.Vars(r)
+	var chartData []Addr
+	jdb.JDB.Read("data/"+v["coin"]+"/richlist", "full", &chartData)
+
+	type ChartValues struct {
+		X int `json:"x"`
+		Y int `json:"y"`
+	}
+	var cV []ChartValues
+	for _, c := range chartData {
+		cV = append(cV, ChartValues{
+			Y: int(c.Value),
+		})
+	}
+	type strInt map[string]interface{}
+	chartJSON := strInt{
+		"width":   240,
+		"height":  120,
+		"padding": map[string]int{"top": 10, "left": 60, "bottom": 30, "right": 10},
+		"data": strInt{
+			"name":   "table",
+			"values": cV,
+		},
+		"scales": []strInt{
+			{
+				"name":   "x",
+				"type":   "ordinal",
+				"range":  "width",
+				"domain": strInt{"data": "table", "field": "x"},
+			},
+			{
+				"name":   "y",
+				"type":   "linear",
+				"range":  "height",
+				"domain": strInt{"data": "table", "field": "y"},
+				"nice":   true,
+			},
+		},
+		"axes": []strInt{
+			{"type": "x", "scale": "x"},
+			{"type": "y", "scale": "y"},
+		},
+		"marks": strInt{
+			"type": "rect",
+			"from": strInt{"data": "table"},
+			"properties": strInt{
+				"enter": strInt{
+					"x":     strInt{"scale": "x", "field": "x"},
+					"width": strInt{"scale": "x", "band": true, "offset": -1},
+					"y":     strInt{"scale": "y", "field": "y"},
+					"y2":    strInt{"scale": "y", "value": 0},
+				},
+				"update": strInt{
+					"fill": strInt{"value": "steelblue"},
+				},
+				"hover": strInt{
+					"fill": strInt{"value": "red"},
+				},
+			},
+		},
+	}
+
+	out, err := json.Marshal(chartJSON)
+	if err != nil {
+		fmt.Println("Error encoding JSON")
+		return
+	}
+	w.Write([]byte(out))
+}

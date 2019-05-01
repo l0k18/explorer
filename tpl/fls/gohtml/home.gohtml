@@ -2,10 +2,12 @@
       <template type="amp-mustache">
       <div class="items">
       {{`{{#coins}}`}}
-        <button class="item" on="tap:AMP.setState({coin: '{{`{{slug}}`}}', tp: 'explorer', perPage: 10, pageNumber: 1 })" class="coin">{{`{{name}}`}} - {{`{{slug}}`}}<strong>{{`{{abbr}}`}}</strong></button>
+        <button on="tap:AMP.setState({showCoin: true, coin: '{{`{{slug}}`}}', tp: 'explorer', perPage: 10, pageNumber: 1 })" class="coin">{{`{{name}}`}} - {{`{{slug}}`}}<strong><abbr title="{{`{{name}}`}}">{{`{{abbr}}`}}</abbr></strong></button>
       {{`{{/coins}}`}}
     </div>
     </template>
   </amp-list>
     
     <button on="tap:AMP.setState({showAddCoin: true})" class="add">Add Coin</button>
+
+

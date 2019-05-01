@@ -1,10 +1,7 @@
-<aside>
-      
-<div amp-fx="fly-in-right" data-duration="500ms">Info
+<aside amp-fx="fly-in-right" data-duration="500ms">Info
       <amp-list
-				  height="300"
-				  layout="fixed-height"
-				  src="/a/mining"
+          layout="fill"
+				  [src]="'/a/' + coin + '/mining'"
 		          items="d"
               single-item
 				  class="cgl">
@@ -19,19 +16,37 @@
       </amp-list>
   
   
-  Latest Transactions
+  <h3>Latest Transactions</h3>
   
       <amp-list
-				  height="200"
-				  layout="fixed-height"
-				  src="/a/rawpool"
-		          items="d"
+				  layout="fill"
+				  [src]="'/a/' + coin + '/rawpool'"
+		      items="d"
+          max-items="10"
 				  class="cgl">
         <template type="amp-mustache">
         {{template "tx_html" .}}
           <br>
         </template>
       </amp-list>
-</div>
 
+
+
+
+<h3>Peers</h3>
+<amp-list
+				  width="200"
+          height="300"
+				  layout="responsive"
+				  [src]="'/a/' + coin + '/'"
+		      items="d"
+          max-items="10"
+				  class="cgl">
+        <template type="amp-mustache">
+        {{template "tx_html" .}}
+          <br>
+        </template>
+      </amp-list>
+
+<button on="tap:AMP.setState({showAddRPCSource: true})" class="add">Add RPC Source</button>
   </aside>

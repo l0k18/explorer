@@ -1,28 +1,54 @@
 <amp-list width="400" height="600" layout="responsive" [src]="'/a/' + coin + '/block/'+ id" items="d" single-item class="cgl">
 
 <template type="amp-mustache">
-<h1>Block <amp-fit-text layout="responsive" width="128" height="8" min-font-size="8" [text]="id"></amp-fit-text></h1>
+<ul class="flx">
+<li><h1>Block Height<amp-fit-text layout="responsive" width="128" height="16" min-font-size="16" [text]="id"></amp-fit-text></h1>
+<ul class="flx">
+{{`{{#difficulty}}`}}<li>Difficulty <span [text]="{{`{{difficulty}}`}}"></span></li>{{`{{/difficulty}}`}}
+{{`{{#time}}`}}<li>Age <span><amp-timeago width="128" height="32" datetime="{{`{{timeutc}}`}}">{{`{{time}}`}}</amp-timeago></span></li>{{`{{/time}}`}}
+{{`{{#time}}`}}<li>Date <span><time>{{`{{time}}`}}</time></span></li>{{`{{/time}}`}}
+</ul>
+</li></ul>
+<ul class="flx">
+<li><ul class="flx hor grb">
+{{`{{#bits}}`}}<li>Bits <span>{{`{{bits}}`}}</span></li>{{`{{/bits}}`}}
+{{`{{#confirmations}}`}}<li>Confirmations <span [text]="{{`{{confirmations}}`}}"></span></li>{{`{{/confirmations}}`}}
+{{`{{#nTx}}`}}<li>Number of Transactions <span [text]="{{`{{nTx}}`}}"></span></li>{{`{{/nTx}}`}}
+{{`{{#nonce}}`}}<li>Nonce <span [text]="{{`{{nonce}}`}}"></span></li>{{`{{/nonce}}`}}
+{{`{{#size}}`}}<li>Size <span [text]="{{`{{size}}`}}"></span></li>{{`{{/size}}`}}
+</ul></li></ul>
 
 
-<table class="table table-hover"><tbody>
-{{`{{#bits}}`}}<tr><th>Bits</th><td>{{`{{bits}}`}}</td></tr>{{`{{/bits}}`}}
-{{`{{#confirmations}}`}}<tr><th>Confirmations</th><td [text]="{{`{{confirmations}}`}}"></td></tr>{{`{{/confirmations}}`}}
-{{`{{#difficulty}}`}}<tr><th>Difficulty</th><td [text]="{{`{{difficulty}}`}}"></td></tr>{{`{{/difficulty}}`}}
-{{`{{#hash}}`}}<tr><th>Hash</th><td>{{template "hash_html" .}}</td></tr>{{`{{/hash}}`}}
-{{`{{#height}}`}}<tr><th>Height</th><td [text]="{{`{{height}}`}}"></td></tr>{{`{{/height}}`}}
-{{`{{#merkleroot}}`}}<tr><th>Merkle root</th><td><pre>{{`{{merkleroot}}`}}</pre></td></tr>{{`{{/merkleroot}}`}}
-{{`{{#nextblockhash}}`}}<tr><th>Next block hash</th><td>{{template "nextblockhash_html" .}}</td></tr>{{`{{/nextblockhash}}`}}
-{{`{{#nonce}}`}}<tr><th>Nonce</th><td [text]="{{`{{nonce}}`}}"></td></tr>{{`{{/nonce}}`}}
-{{`{{#pow_algo}}`}}<tr><th>POW algo</th><td>{{`{{pow_algo}}`}}</td></tr>{{`{{/pow_algo}}`}}
-{{`{{#pow_algo_id}}`}}<tr><th>POW algo id</th><td>{{`{{pow_algo_id}}`}}</td></tr>{{`{{/pow_algo_id}}`}}
-{{`{{#pow_hash}}`}}<tr><th>POW hash</th><td><pre>{{`{{pow_hash}}`}}</pre></td></tr>{{`{{/pow_hash}}`}}
-{{`{{#previousblockhash}}`}}<tr><th>Previous block hash</th><td>{{template "previousblockhash_html" .}}</td></tr>{{`{{/previousblockhash}}`}}
-{{`{{#size}}`}}<tr><th>Size</th><td [text]="{{`{{size}}`}}"></td></tr>{{`{{/size}}`}}
-{{`{{#time}}`}}<tr><th>Time</th><td [text]="{{`{{time}}`}}"></td></tr>{{`{{/time}}`}}
-{{`{{#version}}`}}<tr><th>Version</th><td [text]="{{`{{version}}`}}"></td></tr>{{`{{/version}}`}}
-{{`{{#tx}}`}}<tr><th>TXs</th><td>{{`{{#tx}}`}}{{template "tx_html" .}}<br>{{`{{/tx}}`}}</td></tr>{{`{{/tx}}`}}
-</tbody></table>
+<ul class="flx bsd">
+{{`{{#chainwork}}`}}<li>Chainwork <pre>{{`{{chainwork}}`}}</pre></li>{{`{{/chainwork}}`}}
+{{`{{#mediantime}}`}}<li>Median Time <span [text]="{{`{{mediantime}}`}}"></span></li>{{`{{/mediantime}}`}}
+
+{{`{{#merkleroot}}`}}<li>Merkle root <pre>{{`{{merkleroot}}`}}</pre></li>{{`{{/merkleroot}}`}}
+
+
+{{`{{#strippedsize}}`}}<li>Stripped Size <span>{{`{{strippedsize}}`}}</span></li>{{`{{/strippedsize}}`}}
+
+
+{{`{{#hash}}`}}<li>Hash {{template "hash_html" .}}</li>{{`{{/hash}}`}}
+{{`{{#nextblockhash}}`}}<li>Next block hash {{template "nextblockhash_html" .}}</li>{{`{{/nextblockhash}}`}}
+{{`{{#previousblockhash}}`}}<li>Previous block hash {{template "previousblockhash_html" .}}</li>{{`{{/previousblockhash}}`}}
+
+{{`{{#pow_algo}}`}}<li>POW algo <span>{{`{{pow_algo}}`}}</span></li>{{`{{/pow_algo}}`}}
+{{`{{#pow_algo_id}}`}}<li>POW algo id <span>{{`{{pow_algo_id}}`}}</span></li>{{`{{/pow_algo_id}}`}}
+{{`{{#pow_hash}}`}}<li>POW hash <pre>{{`{{pow_hash}}`}}</pre></li>{{`{{/pow_hash}}`}}
+
+
+{{`{{#version}}`}}<li>Version <span [text]="{{`{{version}}`}}"></span></li>{{`{{/version}}`}}
+{{`{{#versionhex}}`}}<li>Version Hex <span [text]="{{`{{versionhex}}`}}"></span></li>{{`{{/versionhex}}`}}
+{{`{{#weight}}`}}<li>Weight <span [text]="{{`{{weight}}`}}"></span></li>{{`{{/weight}}`}}
+
+</ul>
+<h3>Transactions </h3>
+{{`{{#tx}}`}}{{template "tx_html" .}}{{`{{/tx}}`}}
+
 </template>
+<div overflow><button>Show more</button></div>
+
 </amp-list>
 
 

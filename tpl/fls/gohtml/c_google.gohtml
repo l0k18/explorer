@@ -1,0 +1,43 @@
+<html><head>
+  <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+  <title>Charts</title>
+  <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+  <meta name="robots" content="noindex, nofollow">
+  <meta name="googlebot" content="noindex, nofollow">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+<style type="text/css">
+body{
+  margin:0;
+  padding:0;
+  width:100%;
+  height:100vh;
+}
+</style>
+</head>
+<body>
+<script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+<div id="piechart" style="width: 640px; height: 480px;"></div>
+  <script type="text/javascript">
+      google.charts.load('current', {
+        'packages': ['corechart']
+      });
+      google.charts.setOnLoadCallback(drawChart);
+      function drawChart() {
+        var data = google.visualization.arrayToDataTable([
+          ['Character', 'Bullshit'],
+{{ range .CData}}['{{.Addr}}', {{.Value}}],{{end}}
+        ]);
+        var chart = new google.visualization.PieChart(document.getElementById('piechart'));
+        chart.draw(data);
+      }
+</script>
+  <script>
+    if (window.parent && window.parent.parent){
+      window.parent.parent.postMessage(["resultsFrame", {
+        height: document.body.getBoundingClientRect().height,
+        slug: "4gp36vzt"
+      }], "*")
+    }
+    window.name = "result"
+  </script>
+</body></html>

@@ -1,7 +1,17 @@
 <header>
+<nav>
 <button on="tap:AMP.setState({id: '',tp: 'home'})">Home</button>
-<button on="tap:AMP.setState({id: 'coin', tp: 'explorer'})">ParallelCoin Blockchain Explorer</button>
-<button on="tap:AMP.setState({id: '',tp: 'nodes'})">Nodes</button>
-<button on="tap:AMP.setState({id: '',tp: 'rich'})">Rich</button>
 <button on="tap:AMP.setState({id: '',tp: 'settings'})">Settings</button>
+
+<button on="tap:AMP.setState({id: 'coin', tp: 'explorer'})" class="mustcoin">Blockchain Explorer</button>
+<button on="tap:AMP.setState({id: '',tp: 'nodes'})" class="mustcoin">Nodes</button>
+<button on="tap:AMP.setState({id: '',tp: 'rich'})" class="mustcoin">Richlist</button>
+<button on="tap:AMP.setState({id: '',tp: 'globe'})" class="mustcoin">Globe</button>
+
+
+<a [href]="'/a/' + coin + '/getnodes'">Get Nodes</a>
+<a [href]="'/a/' + coin + '/getrichlist'">Get Richlist</a>
+</nav>
+
 </header>
+
