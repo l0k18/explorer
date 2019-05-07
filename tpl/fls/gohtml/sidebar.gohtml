@@ -1,7 +1,10 @@
 <aside amp-fx="fly-in-right" data-duration="500ms">Info
+  <h3>Info</h3>
       <amp-list
-          layout="fill"
-				  [src]="'/a/' + coin + '/mining'"
+			  width="300"
+          height="200"
+				  layout="responsive"
+           [src]="'/a/' + coin + '/mining'"
 		          items="d"
               single-item
 				  class="cgl">
@@ -19,8 +22,10 @@
   <h3>Latest Transactions</h3>
   
       <amp-list
-				  layout="fill"
-				  [src]="'/a/' + coin + '/rawpool'"
+			  width="300"
+          height="200"
+				  layout="responsive"			
+          [src]="'/a/' + coin + '/rawpool'"
 		      items="d"
           max-items="10"
 				  class="cgl">
@@ -35,8 +40,8 @@
 
 <h3>Peers</h3>
 <amp-list
-				  width="200"
-          height="300"
+				  width="300"
+          height="200"
 				  layout="responsive"
 				  [src]="'/a/' + coin + '/'"
 		      items="d"
